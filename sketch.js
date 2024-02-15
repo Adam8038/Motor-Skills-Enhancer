@@ -10,7 +10,7 @@ function setup() {
 }
 
 function draw() {
-  
+  text("ADAM WAS HERE", 20, 20);
   stroke("blue");
   fill("yellow");
   circle(circXCord,75,150);
