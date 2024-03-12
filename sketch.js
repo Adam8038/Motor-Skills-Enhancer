@@ -28,7 +28,7 @@ function switchToMM(){
 }
 
 function setup() {
-  createCanvas(400, 400);
+  createCanvas(windowWidth, windowHeight);
   background(220);
   menuButton = createButton('Home Page');
   menuButton.position(0, 0);
