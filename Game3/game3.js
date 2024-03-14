@@ -1,4 +1,4 @@
-let g3CurrentLevel = 0;
+let game3CurrentLevel = 0;
 let game3Lvl1, game3Lvl2, game3Lvl3;
 
 function game3Preload(){
@@ -37,25 +37,32 @@ function game3Setup(){
 
 function game3Lvl1Draw(){
   game3Lvl1Button.hide();
+  game3Lvl2Button.hide();
+  game3Lvl3Button.hide();
   background('#C8A2C8');
 
 
 }
 
 function game3Lvl2Draw(){
+  game3Lvl1Button.hide();
   game3Lvl2Button.hide();
+  game3Lvl3Button.hide();
   background('#C8A2C8');
 
 
 }
 
 function game3Lvl3Draw(){
+  game3Lvl1Button.hide();
+  game3Lvl2Button.hide();
   game3Lvl3Button.hide();
   background('#C8A2C8');
 
 
 }
 function game3Draw(){
+
   
   
 }
