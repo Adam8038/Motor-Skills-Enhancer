@@ -10,7 +10,7 @@ let nextLevelButton;
 function setup() {
   createCanvas(400, 400);
 
-  targetPosition = createVector(200, 150); // Define the target position
+  targetPosition = createVector(200, 150); 
 
   setupLevel(currentLevel);
 }
@@ -42,10 +42,10 @@ function draw() {
     }
   }
 
-  // Check if all blocks are within a certain distance from the target position
+  
   let allBlocksStacked = blocks.every(block => {
     let distance = dist(block.x + block.width / 2, block.y + block.height / 2, targetPosition.x, targetPosition.y);
-    return distance < 10; // Adjust the distance threshold as needed
+    return distance < 10; 
   });
 
   if (allBlocksStacked) {
