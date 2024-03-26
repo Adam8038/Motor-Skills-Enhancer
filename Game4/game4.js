@@ -23,14 +23,14 @@ function setupLevel(level) {
 }
 
 function draw() {
-  background(220);
+  background(255, 204, 100);
 
   if (!startGame) {
     drawMenu();
     return;
   }
 
-  
+
   fill(200, 200, 200);
   rect(targetPosition.x - 25, targetPosition.y - 25, 50, 50);
 
