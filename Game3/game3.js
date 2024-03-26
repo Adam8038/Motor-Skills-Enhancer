@@ -1,21 +1,26 @@
 let game3CurrentLevel = 0;
 let game3Lvl1, game3Lvl2, game3Lvl3;
-let dragging = fale;
-let buttonX = 50, buttonY = 150
-let offsetX, offSetY;
+let dragging = false;
+var buttonX = 50, buttonY = 150;
+let offsetX, offsetY;
 
-function game3Preload(){
+var X;
+var Y;
+
+var buttonImage, shirtImage
+
+function game3Preload() {
   buttonImage = loadImage("Game3/redButton.png");
   shirtImage = loadImage("Game3/shirtNoButtons.png");
 }
 
-function game3Setup(){
+function game3Setup() {
   background('#C8A2C8');
   currentActivity = 3;
   textSize(24);
-  text("Welcome to the buttoning game! Pick a level", 450, 100)
-  
-  //creates the level buttons
+  text("Welcome to the buttoning game! Pick a level", 450, 100);
+
+  // Create the level buttons
   game3Lvl1Button = createButton('Level 1');
   game3Lvl1Button.position(250, 200);
   game3Lvl1Button.mousePressed(game3Lvl1Draw);
@@ -27,9 +32,8 @@ function game3Setup(){
   game3Lvl3Button = createButton('Level 3');
   game3Lvl3Button.position(750, 200);
   game3Lvl3Button.mousePressed(game3Lvl3Draw);
-  
 
-  //hiding and showing the buttons of the game3 main menu
+  // Show and hide relevant buttons
   menuButton.show();
   game1Button.hide();
   game2Button.hide();
@@ -40,60 +44,45 @@ function game3Setup(){
 }
 
 function game3MousePressed() {
-  let buttonRadius = buttonImage.width / 2;
-  let q = dist(mouseX, mouseY, buttonX, buttonY);
-  if (q < buttonRadius) { 
-    dragging = true;
-    offsetX = buttonX - mouseX;
-    offsetY = buttonY - mouseY;
+  
+  buttonImage.mousePressed(draggable);
+}
+
+function game3MouseDragged() {
+  if ((mouseX > buttonX - 50) && (mouseX < buttonX + 50)) {
+    if ((mouseY > buttonY - 50) && (mouseY < buttonY + 50)) {
+      buttonX = mouseX;
+      buttonY = mouseY
+    }
   }
 }
 
-function mouseDragged() {
-  if (dragging) {
-    buttonX = mouseX + offsetX;
-    buttonY = mouseY + offsetY;
-  }
-}
-
-function mouseReleased() {
-  dragging = false;
-}
-
-function game3Lvl1Draw(){
-
-  game3Lvl1Button.hide();
-  game3Lvl2Button.hide();
-  game3Lvl3Button.hide();
-  background('#C8A2C8');
-
-  image(buttonImage,buttonX, buttonY);
-  image(shirtImage, 750,0);
-
-
-}
-
-function game3Lvl2Draw(){
-
-  game3Lvl1Button.hide();
-  game3Lvl2Button.hide();
-  game3Lvl3Button.hide();
-  background('#C8A2C8');
-
-
-}
-
-function game3Lvl3Draw(){
-
-  game3Lvl1Button.hide();
-  game3Lvl2Button.hide();
-  game3Lvl3Button.hide();
-  background('#C8A2C8');
-
-
-}
-function game3Draw(){
-
+function game3MouseReleased() {
   
-  
+
+}
+
+
+function game3Lvl1Draw() {
+  game3Lvl1Button.hide();
+  game3Lvl2Button.hide();
+  game3Lvl3Button.hide();
+  background('#C8A2C8');
+
+  image(buttonImage, buttonX, buttonY);
+  image(shirtImage, 750, 0);
+}
+
+function game3Lvl2Draw() {
+  game3Lvl1Button.hide();
+  game3Lvl2Button.hide();
+  game3Lvl3Button.hide();
+  background('#C8A2C8');
+}
+
+function game3Lvl3Draw() {
+  game3Lvl1Button.hide();
+  game3Lvl2Button.hide();
+  game3Lvl3Button.hide();
+  background('#C8A2C8');
 }
