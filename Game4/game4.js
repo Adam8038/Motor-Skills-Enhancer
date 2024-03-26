@@ -30,7 +30,7 @@ function draw() {
     return;
   }
 
-  // Draw target position
+  
   fill(200, 200, 200);
   rect(targetPosition.x - 25, targetPosition.y - 25, 50, 50);
 
