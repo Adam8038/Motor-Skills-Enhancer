@@ -5,6 +5,7 @@ let targetPosition;
 let startGame = false;
 let currentLevel = 1;
 let maxLevel = 3;
+let nextLevelButton;
 
 function setup() {
   createCanvas(400, 400);
@@ -52,9 +53,16 @@ function draw() {
     textAlign(CENTER, CENTER);
     fill(0);
     text("Well done!", width / 2, height / 2);
-    if (currentLevel < maxLevel) {
-      currentLevel++;
-      setupLevel(currentLevel);
+
+    if (!nextLevelButton) {
+      nextLevelButton = createButton("Next Level");
+      nextLevelButton.position(width / 2 - 50, height / 2 + 50);
+      nextLevelButton.mousePressed(nextLevel);
+    }
+  } else {
+    if (nextLevelButton) {
+      nextLevelButton.remove();
+      nextLevelButton = null;
     }
   }
 }
@@ -83,6 +91,15 @@ function mousePressed() {
 
 function mouseReleased() {
   selectedBlock = null;
+}
+
+function nextLevel() {
+  currentLevel++;
+  setupLevel(currentLevel);
+  if (nextLevelButton) {
+    nextLevelButton.remove();
+    nextLevelButton = null;
+  }
 }
 
 class Block {
