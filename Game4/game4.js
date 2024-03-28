@@ -6,6 +6,8 @@ let startGame = false;
 let currentLevel = 1;
 let maxLevel = 3;
 let nextLevelButton;
+let timerDuration = 120; // 2 minutes in seconds
+let timer = timerDuration;
 
 function setup() {
   createCanvas(400, 400);
@@ -30,7 +32,6 @@ function draw() {
     return;
   }
 
-
   fill(200, 200, 200);
   rect(targetPosition.x - 25, targetPosition.y - 25, 50, 50);
 
@@ -42,7 +43,23 @@ function draw() {
     }
   }
 
-  
+  // Timer display
+  textSize(20);
+  textAlign(CENTER, CENTER);
+  fill(0);
+  text("Time Left: " + Math.ceil(timer) + "s", width / 2, 20);
+
+  timer -= 1 / 60; // Reduce timer by 1 second per frame
+
+  if (timer <= 0) {
+    // Game over logic
+    textSize(32);
+    textAlign(CENTER, CENTER);
+    fill(0);
+    text("Game Over", width / 2, height / 2);
+    noLoop(); // Stop the draw loop
+  }
+
   let allBlocksStacked = blocks.every(block => {
     let distance = dist(block.x + block.width / 2, block.y + block.height / 2, targetPosition.x, targetPosition.y);
     return distance < 10; 
@@ -100,6 +117,7 @@ function nextLevel() {
     nextLevelButton.remove();
     nextLevelButton = null;
   }
+  timer -= 30; // Reduce timer by 30 seconds
 }
 
 class Block {
