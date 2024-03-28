@@ -7,7 +7,7 @@ let currentLevel = 1;
 let maxLevel = 3;
 let nextLevelButton;
 let backButton;
-let timerDuration = 120; // 2 minutes in seconds
+let timerDuration = 300; 
 let timer = timerDuration;
 
 function setup() {
@@ -136,7 +136,7 @@ function nextLevel() {
     nextLevelButton.remove();
     nextLevelButton = null;
   }
-  timer -= 30; // Reduce timer by 30 seconds
+  timer -= 10; // Reduce timer by 30 seconds
 }
 
 function goToMenu() {
