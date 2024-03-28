@@ -84,10 +84,22 @@ function draw() {
     }
   }
 
-  if (!backButton) {
-    backButton = createButton("Back to Menu");
-    backButton.position(width / 2 - 75, height - 50);
-    backButton.mousePressed(goToMenu);
+  if (currentLevel > maxLevel) {
+    textSize(32);
+    textAlign(CENTER, CENTER);
+    fill(0);
+    text("Game Over", width / 2, height / 2);
+
+    if (!backButton) {
+      backButton = createButton("Back to Menu");
+      backButton.position(width / 2 - 75, height - 50);
+      backButton.mousePressed(goToMenu);
+    }
+  } else {
+    if (backButton) {
+      backButton.remove();
+      backButton = null;
+    }
   }
 }
 
