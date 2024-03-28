@@ -6,6 +6,7 @@ let startGame = false;
 let currentLevel = 1;
 let maxLevel = 3;
 let nextLevelButton;
+let backButton;
 let timerDuration = 120; // 2 minutes in seconds
 let timer = timerDuration;
 
@@ -82,6 +83,12 @@ function draw() {
       nextLevelButton = null;
     }
   }
+
+  if (!backButton) {
+    backButton = createButton("Back to Menu");
+    backButton.position(width / 2 - 75, height - 50);
+    backButton.mousePressed(goToMenu);
+  }
 }
 
 function drawMenu() {
@@ -118,6 +125,16 @@ function nextLevel() {
     nextLevelButton = null;
   }
   timer -= 30; // Reduce timer by 30 seconds
+}
+
+function goToMenu() {
+  startGame = false;
+  if (backButton) {
+    backButton.remove();
+    backButton = null;
+  }
+  timer = timerDuration; // Reset timer
+  currentLevel = 1; // Reset level
 }
 
 class Block {
