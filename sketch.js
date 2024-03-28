@@ -34,26 +34,29 @@
 
     textSize(24);
     menuButton = createImg('libraries/menuButton.png');
-    menuButton.position(0, 0);
+    menuButton.position(-100, -100);
     menuButton.mousePressed(switchToMM);
     menuButton.hide();
     
     game1Button = createImg('libraries/drawingButton.png');
-    game1Button.position(10, 50);
+    game1Button.position(0, 360);
     game1Button.mousePressed(game1Setup);
     game1Button.show();
     
     game2Button = createImg('libraries/typingButton.png');
-    game2Button.position(10, 100);
+    game2Button.position(300, 360);
     game2Button.mousePressed(game2Setup);
     game2Button.show();
     
     game3Button = createImg('libraries/buttonButton.png');
-    game3Button.position(10, 150);
+    game3Button.position(730, 360);
     game3Button.mousePressed(game3Setup);
     game3Button.show();
 
-    
+    game4Button = createImg('libraries/stackingButton.png');
+    game4Button.position(1050, 360);
+    game4Button.mousePressed(game3Setup);
+    game4Button.show();
     
 
   }
@@ -80,16 +83,16 @@
   }
 
   function mainMenu(){
-    background(220);
-    image(logo, 421.5,100);
+    background('#90EE90');
+    image(logo, 451.5,60);
     fill('black');
 
 
     textSize(72);
     text('Welcome to Precision Play!',290,75);
     
-    textSize(24);
-    text('Click an activity', 200, 200);
+    textSize(32);
+    text('Click an activity', 600, 600);
     
 
   }
@@ -107,6 +110,8 @@
       case 3:
         game3MousePressed();
         break;
+      case 4:
+        game4MousePressed();
     }
   }
 
@@ -116,6 +121,8 @@
       case 3:
         game3MouseReleased();
         break;
+      case 4:
+        game4mouseReleased();
     }
   }
 
