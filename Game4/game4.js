@@ -49,20 +49,20 @@ function draw() {
   }
 
   if (currentLevel <= maxLevel) {
-    // Timer display
+    
     textSize(20);
     textAlign(CENTER, CENTER);
     fill(0);
     text("Time Left: " + Math.ceil(timer) + "s", width / 2, 20);
 
-    timer -= 1 / 60; // Reduce timer by 1 second per frame
+    timer -= 1 / 60; 
 
     if (timer <= 0) {
       textSize(32);
       textAlign(CENTER, CENTER);
       fill(0);
       text("Time's up!", width / 2, height / 2);
-      noLoop(); // Stop the draw loop
+      noLoop(); 
     }
   }
 
@@ -89,7 +89,7 @@ function draw() {
       fill(0);
       text("Well done!", width / 2, height / 2);
       text("Game Over", width / 2, height / 2 + 50);
-      noLoop(); // Stop the draw loop
+      noLoop(); 
     }
   } else {
     if (nextLevelButton) {
@@ -150,7 +150,7 @@ function nextLevel() {
     nextLevelButton.remove();
     nextLevelButton = null;
   }
-  timer = timerDuration; // Reset timer
+  timer = timerDuration; 
 }
 
 function goToMenu() {
@@ -159,8 +159,8 @@ function goToMenu() {
     backButton.remove();
     backButton = null;
   }
-  timer = timerDuration; // Reset timer
-  currentLevel = 1; // Reset level
+  timer = timerDuration; 
+  currentLevel = 1; 
 }
 
 class Block {
