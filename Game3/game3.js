@@ -1,7 +1,7 @@
 let game3CurrentLevel = 0;
 let game3Lvl1, game3Lvl2, game3Lvl3;
 let dragging = false;
-var buttonX = 50, buttonY = 300;
+let buttonX = 50, buttonY = 350;
 let offsetX, offsetY;
 
 var X;
@@ -35,6 +35,10 @@ function game3Setup() {
   game3Lvl3Button.position(800, 300);
   game3Lvl3Button.mousePressed(game3Lvl3Draw);
 
+  game3GameplayButton = createImg("Game3/redButton.png");
+  game3Button.position(buttonX, buttonY);
+  game3Button.mousePressed(game3ButtonMovement);
+
   // Show and hide relevant buttons
   menuButton.show();
   game1Button.hide();
@@ -44,6 +48,7 @@ function game3Setup() {
   game3Lvl1Button.show();
   game3Lvl2Button.show();
   game3Lvl3Button.show();
+  
 }
 
 function game3MousePressed() {
@@ -51,7 +56,7 @@ function game3MousePressed() {
   buttonImage.mousePressed(draggable);
 }
 
-function game3MouseDragged() {
+function game3ButtonMovement(){
   if ((mouseX > buttonX - 50) && (mouseX < buttonX + 50)) {
     if ((mouseY > buttonY - 50) && (mouseY < buttonY + 50)) {
       buttonX = mouseX;
@@ -60,32 +65,22 @@ function game3MouseDragged() {
   }
 }
 
-function game3MouseReleased() {
-  
-
-}
-
 
 function game3Lvl1Draw() {
-  game3Lvl1Button.hide();
-  game3Lvl2Button.hide();
-  game3Lvl3Button.hide();
+  hideAllButtons();
   background('#C8A2C8');
 
-  image(buttonImage, buttonX, buttonY);
+
+  game3GameplayButton.show();
   image(shirtImage, 750, 0);
 }
 
 function game3Lvl2Draw() {
-  game3Lvl1Button.hide();
-  game3Lvl2Button.hide();
-  game3Lvl3Button.hide();
+  hideAllButtons();
   background('#C8A2C8');
 }
 
 function game3Lvl3Draw() {
-  game3Lvl1Button.hide();
-  game3Lvl2Button.hide();
-  game3Lvl3Button.hide();
+  hideAllButtons();
   background('#C8A2C8');
 }
