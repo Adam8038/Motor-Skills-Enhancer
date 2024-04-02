@@ -33,32 +33,37 @@ function draw() {
     return;
   }
 
-  fill(200, 200, 200);
-  rect(targetPosition.x - 25, targetPosition.y - 25, 50, 50);
+  if (currentLevel <= maxLevel) {
+    fill(200, 200, 200);
+    rect(targetPosition.x - 25, targetPosition.y - 25, 50, 50);
+  }
 
-  for (let block of blocks) {
-    block.show();
-    if (block === selectedBlock) {
-      block.x = mouseX - offset.x;
-      block.y = mouseY - offset.y;
+  if (currentLevel <= maxLevel) {
+    for (let block of blocks) {
+      block.show();
+      if (block === selectedBlock) {
+        block.x = mouseX - offset.x;
+        block.y = mouseY - offset.y;
+      }
     }
   }
 
-  // Timer display
-  textSize(20);
-  textAlign(CENTER, CENTER);
-  fill(0);
-  text("Time Left: " + Math.ceil(timer) + "s", width / 2, 20);
-
-  timer -= 1 / 60; // Reduce timer by 1 second per frame
-
-  if (timer <= 0) {
-    // Game over logic
-    textSize(32);
+  if (currentLevel <= maxLevel) {
+    // Timer display
+    textSize(20);
     textAlign(CENTER, CENTER);
     fill(0);
-    text("Game Over", width / 2, height / 2);
-    noLoop(); // Stop the draw loop
+    text("Time Left: " + Math.ceil(timer) + "s", width / 2, 20);
+
+    timer -= 1 / 60; // Reduce timer by 1 second per frame
+
+    if (timer <= 0) {
+      textSize(32);
+      textAlign(CENTER, CENTER);
+      fill(0);
+      text("Time's up!", width / 2, height / 2);
+      noLoop(); // Stop the draw loop
+    }
   }
 
   let allBlocksStacked = blocks.every(block => {
@@ -67,15 +72,24 @@ function draw() {
   });
 
   if (allBlocksStacked) {
-    textSize(32);
-    textAlign(CENTER, CENTER);
-    fill(0);
-    text("Well done!", width / 2, height / 2);
+    if (currentLevel <= maxLevel) {
+      textSize(32);
+      textAlign(CENTER, CENTER);
+      fill(0);
+      text("Well done!", width / 2, height / 2);
 
-    if (!nextLevelButton) {
-      nextLevelButton = createButton("Next Level");
-      nextLevelButton.position(width / 2 - 50, height / 2 + 50);
-      nextLevelButton.mousePressed(nextLevel);
+      if (!nextLevelButton) {
+        nextLevelButton = createButton("Next Level");
+        nextLevelButton.position(width / 2 - 50, height / 2 + 50);
+        nextLevelButton.mousePressed(nextLevel);
+      }
+    } else {
+      textSize(32);
+      textAlign(CENTER, CENTER);
+      fill(0);
+      text("Well done!", width / 2, height / 2);
+      text("Game Over", width / 2, height / 2 + 50);
+      noLoop(); // Stop the draw loop
     }
   } else {
     if (nextLevelButton) {
@@ -136,7 +150,7 @@ function nextLevel() {
     nextLevelButton.remove();
     nextLevelButton = null;
   }
-  timer -= 10; // Reduce timer by 30 seconds
+  timer = timerDuration; // Reset timer
 }
 
 function goToMenu() {
