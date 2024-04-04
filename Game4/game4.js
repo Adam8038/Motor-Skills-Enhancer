@@ -10,7 +10,7 @@ let backButton;
 let timerDuration = 300; 
 let timer = timerDuration;
 
-function setup() {
+function game4setup() {
   createCanvas(400, 400);
   targetPosition = createVector(200, 150); 
   setupLevel(currentLevel);
@@ -23,7 +23,7 @@ function setupLevel(level) {
   }
 }
 
-function draw() {
+function game4draw() {
   background(255, 204, 100);
 
   if (!startGame) {
