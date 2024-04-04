@@ -10,6 +10,10 @@ let backButton;
 let timerDuration = 300; 
 let timer = timerDuration;
 
+function game4Preload(){
+  
+}
+
 function game4setup() {
   createCanvas(400, 400);
   targetPosition = createVector(200, 150); 

@@ -10,11 +10,7 @@ function game3Setup(){
   currentActivity = 3;
   
   // Hide the Activity 3 button, show all the other buttons
-  menuButton.show();
-  game1Button.hide();
-  game2Button.hide();
-  game3Button.hide();
-  game4Button.hide();
+ 
   
   stroke(0);
   fill("red");
