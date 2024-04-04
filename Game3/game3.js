@@ -1,13 +1,15 @@
 let game3CurrentLevel = 0;
 let game3Lvl1, game3Lvl2, game3Lvl3;
-let dragging = false;
 let buttonX = 50, buttonY = 350;
-let offsetX, offsetY;
 
-var X;
-var Y;
 
-var buttonImage, shirtImage, guyButtoningImage
+var dragging = false; // Is the object being dragged?
+var rollover = false; // Is the mouse over the ellipse?
+
+var x, y, w, h; // Location and size
+var offsetX, offsetY; // Mouseclick offset
+
+let buttonImage, shirtImage, guyButtoningImage
 
 function game3Preload() {
   buttonImage = loadImage("Game3/redButton.png");
@@ -16,7 +18,15 @@ function game3Preload() {
 
 function game3Setup() {
   background('#C8A2C8');
+  // createCanvas(windowWidth, windowHeight);
   currentActivity = 3;
+
+  x = 100;
+  y = 300;
+
+  // Dimensions
+  w = 100;
+  h = 100;
 
   
   textSize(24);
@@ -35,9 +45,6 @@ function game3Setup() {
   game3Lvl3Button.position(800, 300);
   game3Lvl3Button.mousePressed(game3Lvl3Draw);
 
-  game3GameplayButton = createImg("Game3/redButton.png");
-  game3Button.position(buttonX, buttonY);
-  game3Button.mousePressed(game3ButtonMovement);
 
   // Show and hide relevant buttons
   menuButton.show();
@@ -53,17 +60,23 @@ function game3Setup() {
 
 function game3MousePressed() {
   
-  buttonImage.mousePressed(draggable);
+  if (mouseX > x && mouseX < x + w && mouseY > y && mouseY < y + h) {
+    dragging = true;
+
+    console.log(mouseX)
+
+    offsetX = x - mouseX;
+    offsetY = y - mouseY;
+  }
+  
+
 }
 
-function game3ButtonMovement(){
-  if ((mouseX > buttonX - 50) && (mouseX < buttonX + 50)) {
-    if ((mouseY > buttonY - 50) && (mouseY < buttonY + 50)) {
-      buttonX = mouseX;
-      buttonY = mouseY
-    }
-  }
+function game3MouseReleased() {
+  // Quit dragging
+  dragging = false;
 }
+
 
 
 function game3Lvl1Draw() {
@@ -71,7 +84,25 @@ function game3Lvl1Draw() {
   background('#C8A2C8');
 
 
-  game3GameplayButton.show();
+  if (mouseX > x && mouseX < x + w && mouseY > y && mouseY < y + h) {
+    rollover = true;
+  } else {
+    rollover = false;
+  }
+
+  // Adjust location if being dragged
+  if (dragging) {
+    x = mouseX + offsetX;
+    y = mouseY + offsetY;
+  }
+  
+  
+
+  stroke(0);
+
+  image(buttonImage, x, y, w, h);
+
+
   image(shirtImage, 750, 0);
 }
 
@@ -84,3 +115,4 @@ function game3Lvl3Draw() {
   hideAllButtons();
   background('#C8A2C8');
 }
+

@@ -19,11 +19,29 @@
   }
 
   function switchToMM(){
-    background(220);
+    background('#90EE90');
+    image(logo, 451.5,60);
     currentActivity = 0;
     recenterButtons();
     hideLvlButtons();
     mmButtonsOnly();
+
+    hideLvlButtons();
+    
+
+    textSize(24);
+    
+    fill('black');
+
+
+    
+
+
+    textSize(72);
+    text('Welcome to Precision Play!',290,75);
+    
+    textSize(32);
+    text('Click an activity', 600, 600);
     
     
     // Hide the home page button, show the activity buttons
@@ -31,7 +49,22 @@
 
   function setup() {
     createCanvas(windowWidth, windowHeight);
-    background(220);
+    background('#90EE90');
+    image(logo, 451.5,60);
+
+    textSize(24);
+    
+    fill('black');
+
+
+    
+
+
+    textSize(72);
+    text('Welcome to Precision Play!',290,75);
+    
+    textSize(32);
+    text('Click an activity', 600, 600);
 
     
   }
@@ -59,15 +92,13 @@
 
   function mainMenu(){
     
-    background('#90EE90');
-    image(logo, 451.5,60);
 
-    menuButton = createImg('libraries/menuButton.png');
+    menuButton = createImg('libraries/menuButton.png', 'The main menu button');
     menuButton.position(-100, -100);
     menuButton.mousePressed(switchToMM);
     menuButton.hide();
     
-    game1Button = createImg('libraries/drawingButton.png');
+    game1Button = createImg('libraries/drawingButton.png','The game 1 button');
     game1Button.position(0, 360);
     game1Button.mousePressed(game1Setup);
     game1Button.show();
@@ -128,21 +159,12 @@
     switch(currentActivity){
       case 3:
         game3MouseReleased();
-        break;
-      case 4:
-        game4mouseReleased();
-        break;
+        
+      //case 4:
+        //game4mouseReleased();
     }
   }
 
-  function mouseDragged(){
-    
-    switch(currentActivity){
-      case 3:
-        game3MouseDragged();
-        break;
-    }
-  }
 
   function hideAllButtons(){
   menuButton.show();
