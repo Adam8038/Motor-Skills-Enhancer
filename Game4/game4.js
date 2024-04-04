@@ -12,9 +12,7 @@ let timer = timerDuration;
 
 function setup() {
   createCanvas(400, 400);
-
   targetPosition = createVector(200, 150); 
-
   setupLevel(currentLevel);
 }
 
@@ -49,12 +47,10 @@ function draw() {
   }
 
   if (currentLevel <= maxLevel) {
-    
     textSize(20);
     textAlign(CENTER, CENTER);
     fill(0);
     text("Time Left: " + Math.ceil(timer) + "s", width / 2, 20);
-
     timer -= 1 / 60; 
 
     if (timer <= 0) {
@@ -160,7 +156,10 @@ function goToMenu() {
     backButton = null;
   }
   timer = timerDuration; 
-  currentLevel = 1; 
+  if (currentLevel <= maxLevel) {
+    currentLevel = 1;
+    setupLevel(currentLevel);
+  }
 }
 
 class Block {
