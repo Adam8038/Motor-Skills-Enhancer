@@ -10,11 +10,7 @@ function game1Setup(){
   currentActivity = 1;
   
   // Hide the Game 1 button, show all the other navigation buttons
-  menuButton.show();
-  game1Button.hide();
-  game2Button.show();
-  game3Button.show();
-  
+  hideAllButtons();
   // Set the size of the owl image
   owlImage.resize(150, 150);
 }

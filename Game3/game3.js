@@ -1,5 +1,5 @@
 let game3CurrentLevel = 0;
-let game3Lvl1, game3Lvl2, game3Lvl3;
+let game3Lvl1Button, game3Lvl2Button, game3Lvl3Button;
 let buttonX = 50, buttonY = 350;
 
 
@@ -46,15 +46,8 @@ function game3Setup() {
   game3Lvl3Button.mousePressed(game3Lvl3Draw);
 
 
-  // Show and hide relevant buttons
-  menuButton.show();
-  game1Button.hide();
-  game2Button.hide();
-  game3Button.hide();
-  game4Button.hide();
-  game3Lvl1Button.show();
-  game3Lvl2Button.show();
-  game3Lvl3Button.show();
+  
+  hideMMButtons();
   
 }
 
@@ -80,9 +73,14 @@ function game3MouseReleased() {
 
 
 function game3Lvl1Draw() {
-  hideAllButtons();
+
+  game3CurrentLevel = 1;
+
+  hideMMButtons();
+  hideGame3Buttons();
   background('#C8A2C8');
 
+  
 
   if (mouseX > x && mouseX < x + w && mouseY > y && mouseY < y + h) {
     rollover = true;
@@ -106,13 +104,16 @@ function game3Lvl1Draw() {
   image(shirtImage, 750, 0);
 }
 
+
 function game3Lvl2Draw() {
-  hideAllButtons();
+  hideMMButtons();
+  hideGame3Buttons();
   background('#C8A2C8');
 }
 
 function game3Lvl3Draw() {
-  hideAllButtons();
+  hideMMButtons();
+  hideGame3Buttons();
   background('#C8A2C8');
 }
 

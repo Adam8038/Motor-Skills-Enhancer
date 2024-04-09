@@ -16,17 +16,20 @@
     game1Preload();
     game2Preload();
     game3Preload();
+    
   }
+
+  
 
   function switchToMM(){
     background('#90EE90');
     image(logo, 451.5,60);
     currentActivity = 0;
     recenterButtons();
-    hideLvlButtons();
+    
     mmButtonsOnly();
 
-    hideLvlButtons();
+    
     
 
     textSize(24);
@@ -65,6 +68,7 @@
     
     textSize(32);
     text('Click an activity', 600, 600);
+    
 
     
   }
@@ -72,16 +76,16 @@
 
   function draw() {  
     switch(currentActivity){
-      case 0: 
+      case 0:
         mainMenu();
         break;
-      case 1: 
+      case 1:
         game1Draw();
         break;
-      case 2: 
+      case 2:
         game2Draw();
         break;
-      case 3: 
+      case 3:
         game3Draw();
         break;
       case 4:
@@ -90,15 +94,16 @@
     }
   }
 
+
   function mainMenu(){
     
 
-    menuButton = createImg('libraries/menuButton.png', 'The main menu button');
+    menuButton = createImg('libraries/menuButton.png');
     menuButton.position(-100, -100);
     menuButton.mousePressed(switchToMM);
     menuButton.hide();
     
-    game1Button = createImg('libraries/drawingButton.png','The game 1 button');
+    game1Button = createImg('libraries/drawingButton.png');
     game1Button.position(0, 360);
     game1Button.mousePressed(game1Setup);
     game1Button.show();
@@ -115,10 +120,10 @@
 
     game4Button = createImg('libraries/stackingButton.png');
     game4Button.position(1050, 360);
-    game4Button.mousePressed(game4Setup);
+    game4Button.mousePressed(game4SetupWrapper);
     game4Button.show();
 
-    hideLvlButtons();
+    
     
 
     textSize(24);
@@ -141,64 +146,58 @@
   
   function mousePressed(){
     
-    switch(currentActivity){
-      case 2: 
-        game2MousePressed();
-        break;
-      case 3:
-        game3MousePressed();
-        break;
-      case 4:
-        game4MousePressed();
-        break;
-    }
+      game2MousePressed();
+      game3MousePressed();
+      game4MousePressed();
   }
 
   function mouseReleased(){
+
+      game3MouseReleased();
+      game4MouseReleased();
+  }
+
+  function hideMMButtons(){
+    menuButton.show();
+    game1Button.hide();
+    game2Button.hide();
+    game3Button.hide();
+    game4Button.hide();
     
-    switch(currentActivity){
-      case 3:
-        game3MouseReleased();
-        
-      //case 4:
-        //game4mouseReleased();
     }
+  
+    function hidegame3LvlButtons(){
+    game3Lvl1Button.hide();
+    game3Lvl2Button.hide();
+    game3Lvl3Button.hide();
+    }
+  
+    function mmButtonsOnly(){
+    menuButton.show();
+    game1Button.show();
+    game2Button.show();
+    game3Button.show();
+    game4Button.show();
+    
+    }
+  
+  function hideGame3Buttons(){
+    menuButton.show();
+    game1Button.hide();
+    game2Button.hide();
+    game3Button.hide();
+    game4Button.hide();
+    game3Lvl1Button.hide();
+    game3Lvl2Button.hide();
+    game3Lvl3Button.hide();
   }
-
-
-  function hideAllButtons(){
-  menuButton.show();
-  game1Button.hide();
-  game2Button.hide();
-  game3Button.hide();
-  game4Button.hide();
-  game3Lvl1Button.hide();
-  game3Lvl2Button.hide();
-  game3Lvl3Button.hide();
-  }
-
-  function hideLvlButtons(){
-  game3Lvl1Button.hide();
-  game3Lvl2Button.hide();
-  game3Lvl3Button.hide();
-  }
-
-  function mmButtonsOnly(){
-  menuButton.show();
-  game1Button.show();
-  game2Button.show();
-  game3Button.show();
-  game4Button.show();
-  game3Lvl1Button.hide();
-  game3Lvl2Button.hide();
-  game3Lvl3Button.hide();
-  }
-
-  function recenterButtons(){
-
-    menuButton.position(-100, -100);
-    game2Button.position(300, 360);
-    game3Button.position(730, 360);
-    game4Button.position(1050, 360);
-
-  }
+  
+    function recenterButtons(){
+  
+      menuButton.position(-100, -100);
+      game2Button.position(300, 360);
+      game3Button.position(730, 360);
+      game4Button.position(1050, 360);
+  
+    }
+  
