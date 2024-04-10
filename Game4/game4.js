@@ -23,6 +23,8 @@ function game4Setup() {
   game4LvlButton.position(width/2, height /2);
   game4LvlButton.mousePressed(game4Level1Setup);
 
+  onlyMMButton();
+
 
   textSize(32);
   textAlign(CENTER, CENTER);
