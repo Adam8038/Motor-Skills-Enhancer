@@ -30,7 +30,7 @@ function game4Setup() {
   text("Click to Start", width / 2, height / 2);
 
   setupLevel(currentLevel);
-  hideMMButtons();
+  
   
   
 }
@@ -63,7 +63,7 @@ function game4Draw(){
 
 function game4Level1draw() {
 
-  hideMMButtons();
+  
   setupLevel(currentLevel);
 
 
