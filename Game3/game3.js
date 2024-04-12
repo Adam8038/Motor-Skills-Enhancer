@@ -10,14 +10,17 @@ let game3Winner = false;
 var dragging = false; // Is the object being dragged?
 var rollover = false; // Is the mouse over the ellipse?
 
-var x, y, w, h; // Location and size
-var offsetX, offsetY; // Mouseclick offset
+var x, y, w, h; 
+var offsetX, offsetY; 
 
-let buttonImage, shirtImage, guyButtoningImage
+let buttonImage, shirtImage, guyButtoningImage, confetti, hornImage, hornImage2, hornImage3
 
 function game3Preload() {
   buttonImage = loadImage("Game3/redButton.png");
-  shirtImage = loadImage("Game3/shirtNoButtons.png");
+  confettiImage = loadImage("Game3/confetti.png");
+  hornImage = loadImage("Game3/horn.png");
+  hornImage2 = loadImage("Game3/horn.png");
+  hornImage3 = loadImage("Game3/horn.png");
   
 
   
@@ -28,6 +31,7 @@ function game3Setup() {
   background('#C8A2C8');
   
   game3loaded = true;
+  
 
   onlyMMButton();
 
@@ -41,8 +45,9 @@ function game3Setup() {
   h = 100;
 
   
-  textSize(24);
-  text("Welcome to the buttoning game! Pick a level", 450, 100);
+  textSize(55);
+  fill('black');
+  text("Welcome to the buttoning game! Pick a level", 200, 100);
 
   // Create the level buttons
   game3Lvl1Button = createImg('libraries/lvl1Button.png');
@@ -56,6 +61,10 @@ function game3Setup() {
   game3Lvl3Button = createImg('libraries/lvl3Button.png');
   game3Lvl3Button.position(800, 300);
   game3Lvl3Button.mousePressed(game3Lvl3Draw);
+
+  shirtImage = createImg("Game3/shirtNoButtons.png");
+  shirtImage.position(750, 0);
+  shirtImage.hide();
 
   
   
@@ -78,23 +87,13 @@ function game3MousePressed() {
   
   
   console.log(mouseX,mouseY);
+  console.log(game3Winner);
+  console.log(game3CurrentLevel);
   
-  console.log(dragging);
-  
-
-
 }
-
-function game3MouseReleased() {
-
-  dragging = false;
-}
-
-
-
 function game3Lvl1Draw() {
 
-  
+  shirtImage.show();
   
   createCanvas(windowWidth, windowHeight);
   background('#C8A2C8');
@@ -102,22 +101,44 @@ function game3Lvl1Draw() {
   
   if(!game3Winner){
     game3CurrentLevel = 1;
+    
   }
 
+  
   if(game3CurrentLevel = 1){
+
     if(mouseX>= 1115 && mouseX < 1135 && mouseY >= 363 && mouseY <= 383){
       game3Winner = true;
-      textSize(24);
-      text("Congrats you won", 450, 100);
-    }
-  }
+      game3CurrentLevel = 0;
+    
+      image(confettiImage, 500,0,1200,800);
+      image(hornImage, 50,80);
+      image(hornImage2, 200, 200);
+      image(hornImage3, 125, 400);
+      shirtImage.hide();
 
+      textSize(48);
+      fill('black');
+      text("Congrats you won", 500, 100);
+      
+
+    }
+    if(mouseX >= 700 && mouseY <= 450 && mouseY >= 250 && !game3Winner){
+      textSize(48);
+      fill('black');
+      text("Keep going you're almost there", 250, 200);
+    }
+
+    if(!game3Winner && game3CurrentLevel != 0){
+      textSize(48);
+      fill('black');
+      text("You got this!",450, 50);
+    }
+
+  }
   image(buttonImage, mouseX-50, mouseY-50, w, h);
 
   
-
-
-  image(shirtImage, 750, 0);
 }
 
 

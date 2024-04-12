@@ -151,7 +151,6 @@
 
   function mouseReleased(){
 
-      game3MouseReleased();
       game4MouseReleased();
   }
 
