@@ -31,8 +31,7 @@
 
     
     if(game3loaded = true){
-      hideGame3LvlButtons();
-      game3loaded = false;
+      resetGame3();
     }
     
 

@@ -6,11 +6,13 @@ let game3loaded = false;
 let game3CurrentLevel;
 let game3Winner = false;
 
+let timerValue = 120;
+
 
 var dragging = false; // Is the object being dragged?
 var rollover = false; // Is the mouse over the ellipse?
 
-var x, y, w, h; 
+var w, h; 
 var offsetX, offsetY; 
 
 let buttonImage, shirtImage, guyButtoningImage, confetti, hornImage, hornImage2, hornImage3
@@ -29,24 +31,20 @@ function game3Preload() {
 function game3Setup() {
   createCanvas(windowWidth, windowHeight);
   background('#C8A2C8');
-  
+
+  setInterval(timeIt, 1000);
   game3loaded = true;
   
 
   onlyMMButton();
 
-
-
-  x = 100;
-  y = 300;
-
-  // Dimensions
   w = 100;
   h = 100;
 
   
   textSize(55);
   fill('black');
+  
   text("Welcome to the buttoning game! Pick a level", 200, 100);
 
   // Create the level buttons
@@ -82,7 +80,7 @@ function game3Draw(){
   }
 
 } 
-
+//tis function is essentially unused in gameplay i just use it for debugging
 function game3MousePressed() {
   
   
@@ -91,8 +89,10 @@ function game3MousePressed() {
   console.log(game3CurrentLevel);
   
 }
+//level 1 main function
 function game3Lvl1Draw() {
 
+//create the background and hide the buttons
   shirtImage.show();
   
   createCanvas(windowWidth, windowHeight);
@@ -107,33 +107,31 @@ function game3Lvl1Draw() {
   
   if(game3CurrentLevel = 1){
 
-    if(mouseX>= 1115 && mouseX < 1135 && mouseY >= 363 && mouseY <= 383){
-      game3Winner = true;
-      game3CurrentLevel = 0;
-    
-      image(confettiImage, 500,0,1200,800);
-      image(hornImage, 50,80);
-      image(hornImage2, 200, 200);
-      image(hornImage3, 125, 400);
-      shirtImage.hide();
+    checkTopButton();
 
-      textSize(48);
-      fill('black');
-      text("Congrats you won", 500, 100);
-      
+    checkBottomButton();
 
-    }
+    //checks if the user is close the button holes
     if(mouseX >= 700 && mouseY <= 450 && mouseY >= 250 && !game3Winner){
       textSize(48);
       fill('black');
       text("Keep going you're almost there", 250, 200);
     }
-
+    //Some advice and encouragement for the user
     if(!game3Winner && game3CurrentLevel != 0){
       textSize(48);
       fill('black');
       text("You got this!",450, 50);
+
+      textSize(32);
+      text("Put the button in either hole",450,500);
     }
+
+    //displays the timer
+    if (timerValue >= 0) {
+      text("Time left:" + timerValue, 200,200);
+    }
+    
 
   }
   image(buttonImage, mouseX-50, mouseY-50, w, h);
@@ -154,11 +152,67 @@ function game3Lvl3Draw() {
   background('#C8A2C8');
 }
 
+//function to hide the game 3 buttons
 function hideGame3LvlButtons(){
 
   game3Lvl1Button.hide();
   game3Lvl2Button.hide();
   game3Lvl3Button.hide();
+  
+
+}
+//this function resets all important game 3 variables for the user to play the game again
+function resetGame3(){
+
+  game3CurrentLevel = 0;
+  game3loaded = false;
+  hideGame3LvlButtons();
+  shirtImage.hide();
+  game3Winner = false;
+  timerValue = 120;
+  
+}
+
+//this checks to see if the user is in the top buttonhole if they are then calls the winner function
+function checkTopButton(){
+  if(mouseX>= 1115 && mouseX < 1135 && mouseY >= 363 && mouseY <= 383){
+    game3Winner = true;
+    game3CurrentLevel = 0;
+  
+    winnerWinner3();
+
+  }
+}
+
+function checkBottomButton(){
+
+  if(mouseX>= 1115 && mouseX < 1135 && mouseY >= 540 && mouseY <= 570){
+    game3Winner = true;
+    game3CurrentLevel = 0;
+  
+    winnerWinner3();
+    
+
+  }
 
 }
 
+function winnerWinner3(){
+
+  image(confettiImage, 500,0,1200,800);
+    image(hornImage, 50,80);
+    image(hornImage2, 200, 200);
+    image(hornImage3, 125, 400);
+    shirtImage.hide();
+
+    textSize(48);
+    fill('black');
+    text("Congrats you won", 500, 100);
+}
+
+
+function timeIt() {
+  if (timerValue > 0) {
+    timerValue--;
+  }
+}
