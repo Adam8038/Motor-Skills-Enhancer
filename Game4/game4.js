@@ -3,22 +3,38 @@ let selectedBlock = null;
 let offset;
 let targetPosition;
 let startGame = false;
-let currentLevel = 1;
+let currentLevel = 0;
 let maxLevel = 3;
 let nextLevelButton;
 let backButton;
 let timerDuration = 300; 
 let timer = timerDuration;
+let game4LvlButton;
 
-function game4Preload(){
 
-}
 
 function game4Setup() {
-  createCanvas(400, 400);
-  targetPosition = createVector(200, 150); 
+  
+  
+  createCanvas(windowWidth, windowHeight);
+  targetPosition = createVector(200, 150);
+
+  game4LvlButton = createImg('libraries/lvl1Button.png');
+  game4LvlButton.position(width/2, height /2);
+  game4LvlButton.mousePressed(game4Level1Setup);
+
+  onlyMMButton();
+
+
+  textSize(32);
+  textAlign(CENTER, CENTER);
+  fill(0);
+  text("Click to Start", width / 2, height / 2);
+
   setupLevel(currentLevel);
-  hideAllButtons();
+  
+  
+  
 }
 
 function setupLevel(level) {
@@ -28,13 +44,30 @@ function setupLevel(level) {
   }
 }
 
-function game4draw() {
-  background(255, 204, 100);
+function game4SetupWrapper() {
+  clear();
+  game4Setup(); // This should also set startGame to true to begin the game.
+  currentActivity = 4;
+  setupLevel(currentLevel);
+}
 
-  if (!startGame) {
-    drawMenu();
-    return;
+function game4Level1Setup(){
+  currentLevel = 1;
+}
+
+function game4Draw(){
+  switch(currentLevel){
+    case 1:
+      game4Level1draw();
+      break;
   }
+}
+
+function game4Level1draw() {
+
+  
+  setupLevel(currentLevel);
+
 
   if (currentLevel <= maxLevel) {
     fill(200, 200, 200);
@@ -105,27 +138,14 @@ function game4draw() {
     fill(0);
     text("Game Over", width / 2, height / 2);
 
-    if (!backButton) {
-      backButton = createButton("Back to Menu");
-      backButton.position(width / 2 - 75, height - 50);
-      backButton.mousePressed(goToMenu);
-    }
-  } else {
-    if (backButton) {
-      backButton.remove();
-      backButton = null;
-    }
-  }
+    
+  } 
+  
 }
 
-function drawMenu() {
-  textSize(32);
-  textAlign(CENTER, CENTER);
-  fill(0);
-  text("Click to Start", width / 2, height / 2);
-}
 
-function mousePressed() {
+
+function game4MousePressed() {
   if (!startGame) {
     startGame = true;
     return;
@@ -140,7 +160,7 @@ function mousePressed() {
   }
 }
 
-function mouseReleased() {
+function game4MouseReleased() {
   selectedBlock = null;
 }
 
@@ -154,18 +174,7 @@ function nextLevel() {
   timer = timerDuration; 
 }
 
-function goToMenu() {
-  startGame = false;
-  if (backButton) {
-    backButton.remove();
-    backButton = null;
-  }
-  timer = timerDuration; 
-  if (currentLevel <= maxLevel) {
-    currentLevel = 1;
-    setupLevel(currentLevel);
-  }
-}
+
 
 class Block {
   constructor(x, y, color) {
