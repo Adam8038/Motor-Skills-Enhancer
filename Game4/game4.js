@@ -3,38 +3,19 @@ let selectedBlock = null;
 let offset;
 let targetPosition;
 let startGame = false;
-let currentLevel = 0;
+let currentLevel = 1;
 let maxLevel = 3;
 let nextLevelButton;
 let backButton;
-let timerDuration = 300; 
+let timerDuration = 120; // 2 minutes in seconds
 let timer = timerDuration;
-let game4LvlButton;
 
+function setup() {
+  createCanvas(400, 400);
 
-
-function game4Setup() {
-  
-  
-  createCanvas(windowWidth, windowHeight);
-  targetPosition = createVector(200, 150);
-
-  game4LvlButton = createImg('libraries/lvl1Button.png');
-  game4LvlButton.position(width/2, height /2);
-  game4LvlButton.mousePressed(game4Level1Setup);
-
-  onlyMMButton();
-
-
-  textSize(32);
-  textAlign(CENTER, CENTER);
-  fill(0);
-  text("Click to Start", width / 2, height / 2);
+  targetPosition = createVector(200, 150); 
 
   setupLevel(currentLevel);
-  
-  
-  
 }
 
 function setupLevel(level) {
@@ -44,60 +25,40 @@ function setupLevel(level) {
   }
 }
 
-function game4SetupWrapper() {
-  clear();
-  game4Setup(); // This should also set startGame to true to begin the game.
-  currentActivity = 4;
-  setupLevel(currentLevel);
-}
+function draw() {
+  background(255, 204, 100);
 
-function game4Level1Setup(){
-  currentLevel = 1;
-}
-
-function game4Draw(){
-  switch(currentLevel){
-    case 1:
-      game4Level1draw();
-      break;
-  }
-}
-
-function game4Level1draw() {
-
-  
-  setupLevel(currentLevel);
-
-
-  if (currentLevel <= maxLevel) {
-    fill(200, 200, 200);
-    rect(targetPosition.x - 25, targetPosition.y - 25, 50, 50);
+  if (!startGame) {
+    drawMenu();
+    return;
   }
 
-  if (currentLevel <= maxLevel) {
-    for (let block of blocks) {
-      block.show();
-      if (block === selectedBlock) {
-        block.x = mouseX - offset.x;
-        block.y = mouseY - offset.y;
-      }
+  fill(200, 200, 200);
+  rect(targetPosition.x - 25, targetPosition.y - 25, 50, 50);
+
+  for (let block of blocks) {
+    block.show();
+    if (block === selectedBlock) {
+      block.x = mouseX - offset.x;
+      block.y = mouseY - offset.y;
     }
   }
 
-  if (currentLevel <= maxLevel) {
-    textSize(20);
+  // Timer display
+  textSize(20);
+  textAlign(CENTER, CENTER);
+  fill(0);
+  text("Time Left: " + Math.ceil(timer) + "s", width / 2, 20);
+
+  timer -= 1 / 60; // Reduce timer by 1 second per frame
+
+  if (timer <= 0) {
+    // Game over logic
+    textSize(32);
     textAlign(CENTER, CENTER);
     fill(0);
-    text("Time Left: " + Math.ceil(timer) + "s", width / 2, 20);
-    timer -= 1 / 60; 
-
-    if (timer <= 0) {
-      textSize(32);
-      textAlign(CENTER, CENTER);
-      fill(0);
-      text("Time's up!", width / 2, height / 2);
-      noLoop(); 
-    }
+    text("Game Over", width / 2, height / 2);
+    noLoop(); // Stop the draw loop
   }
 
   let allBlocksStacked = blocks.every(block => {
@@ -106,24 +67,15 @@ function game4Level1draw() {
   });
 
   if (allBlocksStacked) {
-    if (currentLevel <= maxLevel) {
-      textSize(32);
-      textAlign(CENTER, CENTER);
-      fill(0);
-      text("Well done!", width / 2, height / 2);
+    textSize(32);
+    textAlign(CENTER, CENTER);
+    fill(0);
+    text("Well done!", width / 2, height / 2);
 
-      if (!nextLevelButton) {
-        nextLevelButton = createButton("Next Level");
-        nextLevelButton.position(width / 2 - 50, height / 2 + 50);
-        nextLevelButton.mousePressed(nextLevel);
-      }
-    } else {
-      textSize(32);
-      textAlign(CENTER, CENTER);
-      fill(0);
-      text("Well done!", width / 2, height / 2);
-      text("Game Over", width / 2, height / 2 + 50);
-      noLoop(); 
+    if (!nextLevelButton) {
+      nextLevelButton = createButton("Next Level");
+      nextLevelButton.position(width / 2 - 50, height / 2 + 50);
+      nextLevelButton.mousePressed(nextLevel);
     }
   } else {
     if (nextLevelButton) {
@@ -132,20 +84,21 @@ function game4Level1draw() {
     }
   }
 
-  if (currentLevel > maxLevel) {
-    textSize(32);
-    textAlign(CENTER, CENTER);
-    fill(0);
-    text("Game Over", width / 2, height / 2);
-
-    
-  } 
-  
+  if (!backButton) {
+    backButton = createButton("Back to Menu");
+    backButton.position(width / 2 - 75, height - 50);
+    backButton.mousePressed(goToMenu);
+  }
 }
 
+function drawMenu() {
+  textSize(32);
+  textAlign(CENTER, CENTER);
+  fill(0);
+  text("Click to Start", width / 2, height / 2);
+}
 
-
-function game4MousePressed() {
+function mousePressed() {
   if (!startGame) {
     startGame = true;
     return;
@@ -160,7 +113,7 @@ function game4MousePressed() {
   }
 }
 
-function game4MouseReleased() {
+function mouseReleased() {
   selectedBlock = null;
 }
 
@@ -171,10 +124,18 @@ function nextLevel() {
     nextLevelButton.remove();
     nextLevelButton = null;
   }
-  timer = timerDuration; 
+  timer -= 30; // Reduce timer by 30 seconds
 }
 
-
+function goToMenu() {
+  startGame = false;
+  if (backButton) {
+    backButton.remove();
+    backButton = null;
+  }
+  timer = timerDuration; // Reset timer
+  currentLevel = 1; // Reset level
+}
 
 class Block {
   constructor(x, y, color) {
