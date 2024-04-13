@@ -58,6 +58,8 @@
     background('#90EE90');
     image(logo, 451.5,60);
 
+    
+
     textSize(24);
     
     fill('black');
@@ -143,7 +145,7 @@
   
   function mousePressed(){
     
-      game2MousePressed();
+      
       game3MousePressed();
       game4MousePressed();
   }
