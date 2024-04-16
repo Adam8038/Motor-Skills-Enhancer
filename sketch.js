@@ -143,7 +143,7 @@
   }
 
   
-  function mousePressed(){
+  function game3MousePressed(){
     
       
       game3MousePressed();
