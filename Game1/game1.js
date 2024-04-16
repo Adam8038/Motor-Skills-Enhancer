@@ -1,14 +1,11 @@
-
 let targetShape = [];
 let tracedPoints = [];
 let pointSize = 5;
 let isDrawing = false;
 let score = 0;
-let owlImage;
 
 function game1Preload(){
-  owlImage = loadImage("Game1/owlCarving.jpg");
-
+  // Preload resources if necessary
 }
 
 function game1Setup() {
@@ -18,17 +15,18 @@ function game1Setup() {
   let targetSize = 100;
   let targetX = (width - targetSize) / 2;
   let targetY = (height - targetSize) / 2;
-  for (let x = targetX; x < targetX + targetSize; x += pointSize) {
-    targetShape.push(createVector(x, targetY));
+
+  for (let game1x = targetX; game1x < targetX + targetSize; game1x += pointSize) {
+    targetShape.push(createVector(game1x, targetY));
   }
-  for (let y = targetY; y < targetY + targetSize; y += pointSize) {
-    targetShape.push(createVector(targetX + targetSize, y));
+  for (let game1y = targetY; game1y < targetY + targetSize; game1y += pointSize) {
+    targetShape.push(createVector(targetX + targetSize, game1y));
   }
-  for (let x = targetX + targetSize; x > targetX; x -= pointSize) {
-    targetShape.push(createVector(x, targetY + targetSize));
+  for (let game1x = targetX + targetSize; game1x > targetX; game1x -= pointSize) {
+    targetShape.push(createVector(game1x, targetY + targetSize));
   }
-  for (let y = targetY + targetSize; y > targetY; y -= pointSize) {
-    targetShape.push(createVector(targetX, y));
+  for (let game1y = targetY + targetSize; game1y > targetY; game1y -= pointSize) {
+    targetShape.push(createVector(targetX, game1y));
   }
 }
 
@@ -42,4 +40,5 @@ function game1Draw() {
   for (let point of targetShape) {
     vertex(point.x, point.y);
   }
+  endShape(CLOSE);  // Ensure the shape is closed
 }

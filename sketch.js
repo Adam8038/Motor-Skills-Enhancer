@@ -1,16 +1,6 @@
-  /****
-   * FSE100: examples for how to link multiple exercises together
-   *****/
-
   let currentActivity = 0;
-  let menuButton, game1Button, game2Button, game3Button, game4Button;
-  
+  let menuButton, game1Button, game2Button, game3Button, game4Button;  
 
-  /***** 
-    * If you want to load images or sounds into your application,
-    * try using preload()
-    * https://p5js.org/reference/#/p5/preload
-    *****/
   function preload(){
     logo = loadImage("libraries/Logo.png");
     game1Preload();
@@ -19,8 +9,6 @@
     
   }
 
-  
-
   function switchToMM(){
     background('#90EE90');
     image(logo, 451.5,60);
@@ -28,10 +16,21 @@
     recenterButtons();
     
     allMMButtons();
+    textSize(72);
+    text('Welcome to Precision Play!',290,75);
+    
+    textSize(32);
+    text('Click an activity', 600, 600);
 
     
-    if(game3loaded = true){
+    if(game3loaded === true){
       resetGame3();
+      
+    }
+
+    if(game2Loaded === true){
+      game2TimerValue = 120;
+      game2Reset();
     }
     
 
@@ -43,11 +42,6 @@
     
 
 
-    textSize(72);
-    text('Welcome to Precision Play!',290,75);
-    
-    textSize(32);
-    text('Click an activity', 600, 600);
     
     
     // Hide the home page button, show the activity buttons

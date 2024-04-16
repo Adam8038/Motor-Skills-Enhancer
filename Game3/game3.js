@@ -4,7 +4,7 @@ let game3loaded = false;
 let game3CurrentLevel;
 let game3Winner = false;
 
-let timerValue = 120;
+let game3TimerValue = 120;
 let game3Score = 0;
 
 var w, h; 
@@ -29,7 +29,7 @@ function game3Setup() {
   createCanvas(windowWidth, windowHeight);
   background('#C8A2C8');
 
-  setInterval(timeIt, 1000);
+  setInterval(game3TimeIt, 1000);
   game3loaded = true;
   onlyMMButton();
 
@@ -79,6 +79,7 @@ function game3Draw(){
       break;
     case 4:
       game3Lvl3DrawPart2();
+      break;
 
   }
 
@@ -109,7 +110,7 @@ function game3Lvl1Draw() {
   }
 
   
-  if(game3CurrentLevel = 1){
+  if(game3CurrentLevel == 1){
 
     
     checkTopButton();
@@ -131,11 +132,12 @@ function game3Lvl1Draw() {
 
       textSize(32);
       text("Put the button in either hole",325,150);
+      game3CurrentLevel = 1;
     }
 
     //displays the timer
-    if (timerValue >= 0) {
-      text("Time left:" + timerValue, 40, 230);
+    if (game3TimerValue >= 0) {
+      text("Time left:" + game3TimerValue, 40, 230);
     }
     
 
@@ -160,7 +162,7 @@ function game3Lvl2Draw() {
   }
 
   
-  if(game3CurrentLevel = 2){
+  if(game3CurrentLevel === 2){
 
     if(keyIsDown(ENTER)){
 
@@ -186,8 +188,8 @@ function game3Lvl2Draw() {
     }
 
     //displays the timer
-    if (timerValue >= 0) {
-      text("Time left:" + timerValue, 40, 230);
+    if (game3TimerValue >= 0) {
+      text("Time left:" + game3TimerValue, 40, 230);
     }
   }
 
@@ -210,7 +212,7 @@ function game3Lvl3Draw() {
   }
 
   
-  if(game3CurrentLevel = 3){
+  if(game3CurrentLevel === 3){
 
     if(keyIsDown(ENTER)){
 
@@ -235,8 +237,8 @@ function game3Lvl3Draw() {
     }
 
     //displays the timer
-    if (timerValue >= 0) {
-      text("Time left:" + timerValue, 40, 230);
+    if (game3TimerValue >= 0) {
+      text("Time left:" + game3TimerValue, 40, 230);
     }
   }
 
@@ -250,7 +252,7 @@ function game3Lvl3DrawPart2() {
   image(buttonImage2,1075,330,w,h);
   
   
-  if(game3CurrentLevel = 4){
+  if(game3CurrentLevel === 4){
 
     if(keyIsDown(ENTER)){
 
@@ -274,8 +276,8 @@ function game3Lvl3DrawPart2() {
     }
 
     //displays the timer
-    if (timerValue >= 0) {
-      text("Time left:" + timerValue, 40, 230);
+    if (game3TimerValue >= 0) {
+      text("Time left:" + game3TimerValue, 40, 230);
     }
   }
   image(buttonImage, mouseX-50, mouseY-50, w, h);
@@ -298,7 +300,7 @@ function resetGame3(){
   hideGame3LvlButtons();
   shirtImage.hide();
   game3Winner = false;
-  timerValue = 120;
+  game3TimerValue = 120;
   
 }
 
@@ -346,13 +348,13 @@ function winnerWinner3(){
 }
 
 //timing function
-function timeIt() {
-  if (timerValue > 0) {
-    timerValue--;
+function game3TimeIt() {
+  if (game3TimerValue > 0) {
+    game3TimerValue--;
   }
 }
 
 
 function game3getScore(){
-  game3Score = timerValue * 152;
+  game3Score = game3TimerValue * 152;
 }

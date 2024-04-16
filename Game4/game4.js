@@ -177,7 +177,7 @@ function nextLevel() {
 
 
 class Block {
-  constructor(x, y, color) {
+  constructor(game1x, game1y, color) {
     this.x = x;
     this.y = y;
     this.color = color;
