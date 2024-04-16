@@ -31,11 +31,7 @@
 
     
     if(game3loaded = true){
-      function resetGame3(){
-        resetGame3();
-    
-      }
-      
+      resetGame3();
     }
     
 
@@ -147,7 +143,7 @@
   }
 
   
-  function game3MousePressed(){
+  function mousePressed(){
     
       
       game3MousePressed();
