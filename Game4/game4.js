@@ -11,7 +11,9 @@ let timerDuration = 300;
 let timer = timerDuration;
 let game4LvlButton;
 
+function game4Preload(){
 
+}
 
 function game4Setup() {
   
