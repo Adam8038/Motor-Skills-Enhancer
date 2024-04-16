@@ -3,19 +3,38 @@ let selectedBlock = null;
 let offset;
 let targetPosition;
 let startGame = false;
-let currentLevel = 1;
+let currentLevel = 0;
 let maxLevel = 3;
 let nextLevelButton;
 let backButton;
-let timerDuration = 120; // 2 minutes in seconds
+let timerDuration = 300; 
 let timer = timerDuration;
+let game4LvlButton;
 
-function setup() {
-  createCanvas(400, 400);
 
-  targetPosition = createVector(200, 150); 
+
+function game4Setup() {
+  
+  
+  createCanvas(windowWidth, windowHeight);
+  targetPosition = createVector(200, 150);
+
+  game4LvlButton = createImg('libraries/lvl1Button.png');
+  game4LvlButton.position(width/2, height /2);
+  game4LvlButton.mousePressed(game4Level1Setup);
+
+  onlyMMButton();
+
+
+  textSize(32);
+  textAlign(CENTER, CENTER);
+  fill(0);
+  text("Click to Start", width / 2, height / 2);
 
   setupLevel(currentLevel);
+  
+  
+  
 }
 
 function setupLevel(level) {
@@ -25,40 +44,60 @@ function setupLevel(level) {
   }
 }
 
-function draw() {
-  background(255, 204, 100);
+function game4SetupWrapper() {
+  clear();
+  game4Setup(); // This should also set startGame to true to begin the game.
+  currentActivity = 4;
+  setupLevel(currentLevel);
+}
 
-  if (!startGame) {
-    drawMenu();
-    return;
+function game4Level1Setup(){
+  currentLevel = 1;
+}
+
+function game4Draw(){
+  switch(currentLevel){
+    case 1:
+      game4Level1draw();
+      break;
+  }
+}
+
+function game4Level1draw() {
+
+  
+  setupLevel(currentLevel);
+
+
+  if (currentLevel <= maxLevel) {
+    fill(200, 200, 200);
+    rect(targetPosition.x - 25, targetPosition.y - 25, 50, 50);
   }
 
-  fill(200, 200, 200);
-  rect(targetPosition.x - 25, targetPosition.y - 25, 50, 50);
-
-  for (let block of blocks) {
-    block.show();
-    if (block === selectedBlock) {
-      block.x = mouseX - offset.x;
-      block.y = mouseY - offset.y;
+  if (currentLevel <= maxLevel) {
+    for (let block of blocks) {
+      block.show();
+      if (block === selectedBlock) {
+        block.x = mouseX - offset.x;
+        block.y = mouseY - offset.y;
+      }
     }
   }
 
-  // Timer display
-  textSize(20);
-  textAlign(CENTER, CENTER);
-  fill(0);
-  text("Time Left: " + Math.ceil(timer) + "s", width / 2, 20);
-
-  timer -= 1 / 60; // Reduce timer by 1 second per frame
-
-  if (timer <= 0) {
-    // Game over logic
-    textSize(32);
+  if (currentLevel <= maxLevel) {
+    textSize(20);
     textAlign(CENTER, CENTER);
     fill(0);
-    text("Game Over", width / 2, height / 2);
-    noLoop(); // Stop the draw loop
+    text("Time Left: " + Math.ceil(timer) + "s", width / 2, 20);
+    timer -= 1 / 60; 
+
+    if (timer <= 0) {
+      textSize(32);
+      textAlign(CENTER, CENTER);
+      fill(0);
+      text("Time's up!", width / 2, height / 2);
+      noLoop(); 
+    }
   }
 
   let allBlocksStacked = blocks.every(block => {
@@ -67,15 +106,24 @@ function draw() {
   });
 
   if (allBlocksStacked) {
-    textSize(32);
-    textAlign(CENTER, CENTER);
-    fill(0);
-    text("Well done!", width / 2, height / 2);
+    if (currentLevel <= maxLevel) {
+      textSize(32);
+      textAlign(CENTER, CENTER);
+      fill(0);
+      text("Well done!", width / 2, height / 2);
 
-    if (!nextLevelButton) {
-      nextLevelButton = createButton("Next Level");
-      nextLevelButton.position(width / 2 - 50, height / 2 + 50);
-      nextLevelButton.mousePressed(nextLevel);
+      if (!nextLevelButton) {
+        nextLevelButton = createButton("Next Level");
+        nextLevelButton.position(width / 2 - 50, height / 2 + 50);
+        nextLevelButton.mousePressed(nextLevel);
+      }
+    } else {
+      textSize(32);
+      textAlign(CENTER, CENTER);
+      fill(0);
+      text("Well done!", width / 2, height / 2);
+      text("Game Over", width / 2, height / 2 + 50);
+      noLoop(); 
     }
   } else {
     if (nextLevelButton) {
@@ -84,21 +132,20 @@ function draw() {
     }
   }
 
-  if (!backButton) {
-    backButton = createButton("Back to Menu");
-    backButton.position(width / 2 - 75, height - 50);
-    backButton.mousePressed(goToMenu);
-  }
+  if (currentLevel > maxLevel) {
+    textSize(32);
+    textAlign(CENTER, CENTER);
+    fill(0);
+    text("Game Over", width / 2, height / 2);
+
+    
+  } 
+  
 }
 
-function drawMenu() {
-  textSize(32);
-  textAlign(CENTER, CENTER);
-  fill(0);
-  text("Click to Start", width / 2, height / 2);
-}
 
-function mousePressed() {
+
+function game4MousePressed() {
   if (!startGame) {
     startGame = true;
     return;
@@ -113,7 +160,7 @@ function mousePressed() {
   }
 }
 
-function mouseReleased() {
+function game4MouseReleased() {
   selectedBlock = null;
 }
 
@@ -124,18 +171,10 @@ function nextLevel() {
     nextLevelButton.remove();
     nextLevelButton = null;
   }
-  timer -= 30; // Reduce timer by 30 seconds
+  timer = timerDuration; 
 }
 
-function goToMenu() {
-  startGame = false;
-  if (backButton) {
-    backButton.remove();
-    backButton = null;
-  }
-  timer = timerDuration; // Reset timer
-  currentLevel = 1; // Reset level
-}
+
 
 class Block {
   constructor(x, y, color) {
