@@ -19,7 +19,7 @@ function game4Setup() {
   createCanvas(windowWidth, windowHeight);
   targetPosition = createVector(200, 150);
 
-  game4LvlButton = createImg('libraries/lvl1Button.png');
+  game4LvlButton = createImg('libraries/lvl1Button.png','Level 1 Game');
   game4LvlButton.position(width/2, height /2);
   game4LvlButton.mousePressed(game4Level1Setup);
 

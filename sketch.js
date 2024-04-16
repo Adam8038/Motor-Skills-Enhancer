@@ -31,6 +31,9 @@
 
     
     if(game3loaded = true){
+      function resetGame3(){
+
+      }
       resetGame3();
     }
     
@@ -64,27 +67,27 @@
     
     fill('black');
 
-    menuButton = createImg('libraries/menuButton.png');
+    menuButton = createImg('libraries/menuButton.png', 'Menu Button');
     menuButton.position(-100, -100);
     menuButton.mousePressed(switchToMM);
     menuButton.hide();
     
-    game1Button = createImg('libraries/drawingButton.png');
+    game1Button = createImg('libraries/drawingButton.png', 'Drawing Button');
     game1Button.position(0, 360);
     game1Button.mousePressed(game1Setup);
     game1Button.show();
     
-    game2Button = createImg('libraries/typingButton.png');
+    game2Button = createImg('libraries/typingButton.png', 'Typing Button');
     game2Button.position(300, 360);
     game2Button.mousePressed(game2Setup);
     game2Button.show();
     
-    game3Button = createImg('libraries/buttonButton.png');
+    game3Button = createImg('libraries/buttonButton.png', 'Button Button');
     game3Button.position(730, 360);
     game3Button.mousePressed(game3Setup);
     game3Button.show();
 
-    game4Button = createImg('libraries/stackingButton.png');
+    game4Button = createImg('libraries/stackingButton.png', 'Stacking Button');
     game4Button.position(1050, 360);
     game4Button.mousePressed(game4SetupWrapper);
     game4Button.show();
