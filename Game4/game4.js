@@ -91,7 +91,7 @@ function game4Level1draw() {
     textAlign(CENTER, CENTER);
     fill(0);
     text("Time Left: " + Math.ceil(timer) + "s", width / 2, 20);
-    timer -= 60; 
+    timer -= 1 / 20; 
 
     if (timer <= 0) {
       textSize(32);
