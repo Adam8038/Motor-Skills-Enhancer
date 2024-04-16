@@ -31,7 +31,7 @@ function game4Setup() {
   textSize(32);
   textAlign(CENTER, CENTER);
   fill(0);
-  text("Click to Start", width / 2, height / 2);
+ 
 
   setupLevel(currentLevel);
   
