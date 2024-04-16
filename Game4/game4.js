@@ -7,7 +7,7 @@ let currentLevel = 0;
 let maxLevel = 3;
 let nextLevelButton;
 let backButton;
-let timerDuration = 300; 
+let timerDuration = 100; 
 let timer = timerDuration;
 let game4LvlButton;
 
@@ -91,7 +91,7 @@ function game4Level1draw() {
     textAlign(CENTER, CENTER);
     fill(0);
     text("Time Left: " + Math.ceil(timer) + "s", width / 2, 20);
-    timer -= 1 / 60; 
+    timer -= 60; 
 
     if (timer <= 0) {
       textSize(32);
