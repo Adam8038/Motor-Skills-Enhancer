@@ -3,7 +3,7 @@ let selectedBlock = null;
 let offset;
 let targetPosition;
 let startGame = false;
-let currentLevel = 0;
+let currentLevel = 1;
 let maxLevel = 3;
 let nextLevelButton;
 let backButton;
