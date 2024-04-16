@@ -144,15 +144,31 @@
 
   
   function mousePressed(){
-    
-      
+    switch(currentActivity){
+      case 1:
+      game1MousePressed();
+      break;
+      case 3:
       game3MousePressed();
+      break;
+      case 4:
       game4MousePressed();
+      break;
+
+    }
+      
   }
 
   function mouseReleased(){
+    switch(currentActivity){
+      case 1:
+        game1MousePressed();
+        break;
+      case 4:
+        game4MouseReleased();
 
-      game4MouseReleased();
+    }
+    
   }
 
   
