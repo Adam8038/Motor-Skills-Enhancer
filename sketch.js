@@ -31,7 +31,11 @@
 
     
     if(game3loaded = true){
-      resetGame3();
+      function resetGame3(){
+        resetGame3();
+    
+      }
+      
     }
     
 
