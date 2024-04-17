@@ -17,10 +17,7 @@
     
     allMMButtons();
     textSize(72);
-    text('Welcome to Precision Play!',290,75);
     
-    textSize(32);
-    text('Click an activity', 600, 600);
 
     
     if(game3loaded === true){

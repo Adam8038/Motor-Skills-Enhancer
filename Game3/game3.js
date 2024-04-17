@@ -110,13 +110,14 @@ function game3Lvl1Draw() {
   }
 
   
-  if(game3CurrentLevel == 1){
+  if(game3CurrentLevel === 1){
 
     
     checkTopButton();
+    
 
     checkBottomButton();
-    
+    console.log("checked bottom");
 
     //checks if the user is close the button holes
     if(mouseX >= 700 && mouseY <= 450 && mouseY >= 250 && !game3Winner){
@@ -309,6 +310,7 @@ function checkTopButton(){
   if(mouseX>= 1115 && mouseX < 1135 && mouseY >= 363 && mouseY <= 383  &&game3CurrentLevel <3){
     game3Winner = true;
     game3CurrentLevel = 0;
+    console.log("checked top");
   
     winnerWinner3();
 
@@ -326,7 +328,7 @@ function checkBottomButton(){
   if(mouseX>= 1115 && mouseX < 1135 && mouseY >= 540 && mouseY <= 570){
     game3Winner = true;
     game3CurrentLevel = 0;
-  
+    console.log("checked bottom");
     winnerWinner3(); 
   }
 

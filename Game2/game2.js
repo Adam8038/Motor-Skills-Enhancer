@@ -20,6 +20,7 @@ function game2Preload() {
 
 function game2Setup() {
   createCanvas(windowWidth, windowHeight);
+  currentActivity = 2;
   onlyMMButton();
   game2Loaded = true;
   
@@ -42,7 +43,7 @@ function game2Setup() {
   game2Lvl3Button.mousePressed(() => playLevel(3));
 }
 
-function draw() {
+function game2Draw() {
   
     switch (game2CurrentLevel) {
       case 1: game2Lvl1Draw(); break;
