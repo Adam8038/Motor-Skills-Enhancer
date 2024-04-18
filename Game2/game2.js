@@ -1,5 +1,5 @@
 let game2CurrentLevel = 0;
-let game2Lvl1Button, game2Lvl2Button, game2Lvl3Button,typingImage;
+let game2Lvl1Button, game2Lvl2Button, game2Lvl3Button,typingGameBackground;
 let words = {
   1: ["cat", "dog", "bat"],
   2: ["apple", "banana", "cherry"],
@@ -17,21 +17,21 @@ let game2TimerValue = 120;
 function game2Preload() {
   // Load any required resources here
   setInterval(game2TimeIt, 1000);
-  typingImage = createImg('libraries/typingStockImage.jpg');
-  typingImage.position(500,150);
+
+  typingGameBackground = loadImage("libraries/typingGameBG.png");
   
 
   game2Lvl1Button = createImg('libraries/lvl1Button.png');
-  game2Lvl1Button.position(250, 450);
+  game2Lvl1Button.position(1100, 50);
   game2Lvl1Button.mousePressed(() => playLevel(1));
 
   game2Lvl2Button = createImg('libraries/lvl2Button.png');
-  game2Lvl2Button.position(550, 450);
+  game2Lvl2Button.position(1100, 250);
   game2Lvl2Button.mousePressed(() => playLevel(2));
   
 
   game2Lvl3Button = createImg('libraries/lvl3Button.png');
-  game2Lvl3Button.position(850, 450);
+  game2Lvl3Button.position(1100, 450);
   game2Lvl3Button.mousePressed(() => playLevel(3));
 
   g2LevelSelect = createImg('libraries/levelSelect.png');
@@ -51,9 +51,9 @@ function game2Setup() {
   showGame2LvlButtons();
   
   
-  image(typingImage, 100,100,100,100);
+  
 
-  background('#ADD8E6');
+  background(typingGameBackground);
   textSize(32);
   fill('black');
   text("Welcome to the Typing Game! Pick a level", 500, 100);
@@ -73,7 +73,7 @@ function game2Draw() {
 function playLevel(level) {
   game2CurrentLevel = level;
   hideGame2LvlButtons();
-  background('#ADD8E6');
+  background(typingGameBackground);
   textSize(24);
   fill('black');
   text("Playing Level " + level, width / 2, 50);
@@ -149,7 +149,7 @@ function game2Lvl3Draw() {
 }
 
 function displayWords() {
-  background('#ADD8E6');
+  background(typingGameBackground);
   textSize(32);
   text("You can do this!",550,100);
 
@@ -180,14 +180,14 @@ function hideGame2LvlButtons() {
   game2Lvl1Button.hide();
   game2Lvl2Button.hide();
   game2Lvl3Button.hide();
-  typingImage.hide();
+  
 }
 
 function showGame2LvlButtons() {
   game2Lvl1Button.show();
   game2Lvl2Button.show();
   game2Lvl3Button.show();
-  typingImage.show();
+  
 }
 
 function game2CheckWinner(){

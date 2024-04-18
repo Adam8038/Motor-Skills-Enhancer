@@ -4,6 +4,8 @@ let draggables = [];
 let draggablesCreated =false;
 let game4Winner = false;
 let game4Loaded = false;
+let game4TimerValue = 120;
+let game4TimerLoaded = false;
 
 function game4Preload(){
 
@@ -25,6 +27,8 @@ function game4Preload(){
   g4LevelSelect.mousePressed(game4LvlSelect);
   g4LevelSelect.hide();
 
+  setInterval(game4TimeIt, 1000);
+
   hideGame4LvlButtons();
 }
 
@@ -41,6 +45,7 @@ function game4Setup() {
   textSize(55);
   fill('black');
   text("Welcome to the stacking game! Pick a level", 200, 100);
+  game4TimerLoaded = true;
   
   onlyMMButton();
 }
@@ -58,14 +63,56 @@ function game4Draw(){
 
 
 function game4Lvl1Draw() {
+
   if(game4CurrentLevel != 1){
     game4CurrentLevel = 1;
   }
   background('#6600ff');
   game4Feedback(); 
 
+  if(game4TimerValue === 0){
+    game2LoserMenu();
+  }
+
+  if(game4TimerLoaded === true && game4TimerValue < 120){
+    game4TimerValue = 120;
+    game4TimerLoaded = false;
+  }
+
   if (!draggablesCreated){
   createDraggables(3);
+  draggablesCreated = true;
+  }
+
+  for (let draggable of draggables) {
+    
+    draggable.over();
+    draggable.update();
+    draggable.show();
+    
+  }
+  
+  if (game4TimerValue >= 0) {
+    fill('black');
+    text("Time left:" + game4TimerValue, 40, 230);
+  }
+
+  if(game4Winner === true){
+    game4WinScreen();
+  }
+
+  hideGame4LvlButtons();
+}
+
+function game4Lvl2Draw() {
+  if(game4CurrentLevel != 2){
+    game4CurrentLevel = 2;
+  }
+  background('#6600ff');
+  game4Feedback(); 
+
+  if (!draggablesCreated){
+  createDraggables(6);
   draggablesCreated = true;
   }
 
@@ -83,10 +130,6 @@ function game4Lvl1Draw() {
   }
 
   hideGame4LvlButtons();
-}
-
-function game4Lvl2Draw() {
-  
 }
 
 function game4Lvl3Draw() {
@@ -156,12 +199,18 @@ function game4LvlSelect(){
 }
 
 function game4Feedback(){
-  
 
   textSize(42);
   fill('black');
   
-  text("You can do this!", 200, 100);
+  text("You can do this!", 400, 100);
+  text("stack the block vertically like this:", 200,300);
+}
+
+function game4TimeIt() {
+  if (game4TimerValue > 0) {
+    game4TimerValue--;
+  }
 }
 
 function game4checkWinCondition() {

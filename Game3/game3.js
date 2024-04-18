@@ -6,7 +6,9 @@ let game3Winner = false;
 
 let game3TimerValue = 120;
 let game3TimerLoaded = false;
-let game3Score = 0;
+
+let backgroundImage;
+
 
  
 
@@ -21,6 +23,7 @@ function game3Preload() {
   hornImage3 = loadImage("Game3/horn.png");
   buttonImage2 = loadImage("Game3/redButton.png");
   guyButtoningImage = loadImage("Game3/guyButtoningShirt.jpg");
+  backgroundImage = loadImage("libraries/winScreenBG.png");
 
   setInterval(game3TimeIt, 1000);
 
@@ -241,7 +244,7 @@ function game3Lvl3Draw() {
         fill('black');
         text("You got this!",450, 50);
     
-        textSize(32);
+        textSize(48);
         text("Put the button in the top hole",325,150);
       }
 
@@ -289,7 +292,7 @@ function game3Lvl3DrawPart2() {
         fill('black');
         
     
-        textSize(32);
+        textSize(48);
         text("Put the button in the bottom hole",325,150);
       }
 
@@ -354,19 +357,16 @@ function checkBottomButton(){
 }
 //called when the user wins
 function winnerWinner3(){
-
-  image(confettiImage, 500,0,1200,800);
-    image(hornImage, 50,80);
-    image(hornImage2, 200, 200);
-    image(hornImage3, 125, 400);
-    game3getScore();
+    
+    background(backgroundImage);  
+    getScore(game3TimerValue);
     
 
     g3LevelSelect.show();
     textSize(48);
     fill('black');
-    text("Congrats you won", 500, 100);
-    text("Score:" + game3Score, 40,400)
+    
+    
 }
 
 //timing function
@@ -392,7 +392,7 @@ function game3Feedback(){
     fill('black');
     text("You got this!",450, 50);
 
-    textSize(32);
+    textSize(48);
     text("Put the button in either hole",325,150);
   }
 }

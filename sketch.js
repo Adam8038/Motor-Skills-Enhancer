@@ -1,8 +1,9 @@
   let currentActivity = 0;
-  let menuButton, game1Button, game2Button, game3Button, game4Button;  
+  let menuButton, game1Button, game2Button, game3Button, game4Button, mainMenuBG;  
 
   function preload(){
-    logo = loadImage("libraries/Logo.png");
+    
+    mainMenuBG = loadImage("libraries/mainMenuBG.png");
     game1Preload();
     game2Preload();
     game3Preload();
@@ -11,8 +12,8 @@
   }
 
   function switchToMM(){
-    background('#90EE90');
-    image(logo, 451.5,60);
+    background(mainMenuBG);
+    
     currentActivity = 0;
     recenterButtons();
     
@@ -44,8 +45,9 @@
 
   function setup() {
     createCanvas(windowWidth, windowHeight);
-    background('#90EE90');
-    image(logo, 451.5,60);
+    background(mainMenuBG);
+    
+    
 
     textSize(24);
     
@@ -57,22 +59,22 @@
     menuButton.hide();
     
     game1Button = createImg('libraries/drawingButton.png');
-    game1Button.position(0, 450);
+    game1Button.position(0, 460);
     game1Button.mousePressed(game1Setup);
     game1Button.show();
     
     game2Button = createImg('libraries/typingButton.png');
-    game2Button.position(425, 450);
+    game2Button.position(300, 460);
     game2Button.mousePressed(game2Setup);
     game2Button.show();
     
     game3Button = createImg('libraries/buttonButton.png');
-    game3Button.position(850, 450);
+    game3Button.position(925, 460);
     game3Button.mousePressed(game3Setup);
     game3Button.show();
 
     game4Button = createImg('libraries/stackingButton.png');
-    game4Button.position(1200, 450);
+    game4Button.position(1175, 460);
     game4Button.mousePressed(game4Setup);
     game4Button.show();
 
@@ -81,9 +83,10 @@
 
 
     textSize(72);
-    text('Welcome to Precision Play!',290,75);
+    
     
     textSize(32);
+    fill("white");
     text('Click an activity', 600, 600);
     
 
@@ -121,9 +124,10 @@
 
 
     textSize(72);
-    text('Welcome to Precision Play!',290,75);
+    
     
     textSize(32);
+    fill('white');
     text('Click an activity', 600, 600);
     
 
@@ -182,8 +186,8 @@
   
       menuButton.position(0, 0);
       game1Button.position(0, 450);
-      game2Button.position(425, 450);
-      game3Button.position(850, 450);
+      game2Button.position(400, 450);
+      game3Button.position(875, 450);
       game4Button.position(1200, 450);
   
     }
