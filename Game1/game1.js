@@ -1,6 +1,6 @@
-let shapePoints = [];
-let shadowPoints = [];
-let isDragging = false;
+let shapePoints = []; // Array to store points of the shape
+let shadowPoints = []; // Array to store points of the shadow
+let isDragging = false; // Flag to indicate mouse dragging
 
 function game1Preload(){
   
@@ -17,37 +17,35 @@ function game1Draw() {
   background(220); // Set background color
 
   // Draw shadow
-  stroke(150, 150, 150, 100); // Semi-transparent gray stroke
-  noFill(); // No fill for the shapes
+  noFill();
+  stroke(150, 150, 150, 100); // Semi-transparent gray
   beginShape();
-  shadowPoints.forEach(point => {
-    vertex(point.x, point.y); // Draw each point in the shadow
-  });
-  endShape(CLOSE);
+  for (let i = 0; i < shadowPoints.length; i++) {
+    vertex(shadowPoints[i].x, shadowPoints[i].y);
+  }
+  endShape();
 
   // Draw shape
-  stroke(0); // Black stroke for the shape
+  noFill();
+  stroke(0);
   beginShape();
-  shapePoints.forEach(point => {
-    vertex(point.x, point.y); // Draw each point in the shape
-  });
-  endShape(CLOSE);
+  for (let i = 0; i < shapePoints.length; i++) {
+    vertex(shapePoints[i].x, shapePoints[i].y);
+  }
+  endShape();
 }
 
 function game1MousePressed() {
   // Ensure that mouse press only triggers dragging if it starts within the canvas
-  if (mouseX >= 0 && mouseX <= windowWidth && mouseY >= 0 && mouseY <= windowHeight) {
-    isDragging = true;
-    shapePoints = []; // Clear previous shape points
-    shadowPoints = []; // Clear previous shadow points
-  }
+  isDragging = true;
 }
 
 function game1MouseDragged() {
   if (isDragging) {
-    const offsetX = 5; // Offset for shadow x-coordinate
-    const offsetY = 5; // Offset for shadow y-coordinate
-    shadowPoints.push(createVector(mouseX + offsetX, mouseY + offsetY));
+    // Add points to shadow
+    shadowPoints.push(createVector(mouseX, mouseY));
+    
+    // Add points to shape
     shapePoints.push(createVector(mouseX, mouseY));
   }
 }
@@ -55,3 +53,4 @@ function game1MouseDragged() {
 function game1MouseReleased() {
   isDragging = false; // Stop dragging when mouse is released
 }
+
