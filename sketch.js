@@ -6,6 +6,7 @@
     game1Preload();
     game2Preload();
     game3Preload();
+    game4Preload();
     
   }
 
@@ -18,29 +19,26 @@
     allMMButtons();
     textSize(72);
     
-
+    if(game2Loaded === true){
+      
+      game2Reset();
+    }
     
     if(game3loaded === true){
       resetGame3();
       
     }
 
-    if(game2Loaded === true){
-      game2TimerValue = 120;
-      game2Reset();
+    if(game4Loaded === true){
+      game4Reset();
+      game4Loaded = false;
     }
-    
 
     textSize(24);
     
     fill('black');
 
-
-    
-
-
-    
-    
+     
     // Hide the home page button, show the activity buttons
   }
 
@@ -49,35 +47,33 @@
     background('#90EE90');
     image(logo, 451.5,60);
 
-    
-
     textSize(24);
     
     fill('black');
 
     menuButton = createImg('libraries/menuButton.png');
-    menuButton.position(-100, -100);
+    menuButton.position(0, 0);
     menuButton.mousePressed(switchToMM);
     menuButton.hide();
     
     game1Button = createImg('libraries/drawingButton.png');
-    game1Button.position(0, 360);
+    game1Button.position(0, 450);
     game1Button.mousePressed(game1Setup);
     game1Button.show();
     
     game2Button = createImg('libraries/typingButton.png');
-    game2Button.position(300, 360);
+    game2Button.position(425, 450);
     game2Button.mousePressed(game2Setup);
     game2Button.show();
     
     game3Button = createImg('libraries/buttonButton.png');
-    game3Button.position(730, 360);
+    game3Button.position(850, 450);
     game3Button.mousePressed(game3Setup);
     game3Button.show();
 
     game4Button = createImg('libraries/stackingButton.png');
-    game4Button.position(1050, 360);
-    game4Button.mousePressed(game4SetupWrapper);
+    game4Button.position(1200, 450);
+    game4Button.mousePressed(game4Setup);
     game4Button.show();
 
 
@@ -135,10 +131,10 @@
 
   
   function mousePressed(){
-    
+    switch(currentActivity){
+      case 4: game4MousePressed(); break;
+    }
       
-      game3MousePressed();
-      game4MousePressed();
   }
 
   function mouseReleased(){
@@ -173,10 +169,11 @@
 
     function recenterButtons(){
   
-      menuButton.position(-100, -100);
-      game2Button.position(300, 360);
-      game3Button.position(730, 360);
-      game4Button.position(1050, 360);
+      menuButton.position(0, 0);
+      game1Button.position(0, 450);
+      game2Button.position(425, 450);
+      game3Button.position(850, 450);
+      game4Button.position(1200, 450);
   
     }
   

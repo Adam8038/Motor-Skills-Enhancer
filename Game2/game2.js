@@ -1,5 +1,5 @@
 let game2CurrentLevel = 0;
-let game2Lvl1Button, game2Lvl2Button, game2Lvl3Button;
+let game2Lvl1Button, game2Lvl2Button, game2Lvl3Button,typingImage;
 let words = {
   1: ["cat", "dog", "bat"],
   2: ["apple", "banana", "cherry"],
@@ -11,11 +11,35 @@ let incorrectAttempts = 0;
 let wordInput;
 let game2Winner;
 let game2Loaded = false;
+let game2TimerLoaded = false;
 let game2TimerValue = 120;
 
 function game2Preload() {
   // Load any required resources here
   setInterval(game2TimeIt, 1000);
+  typingImage = createImg('libraries/typingStockImage.jpg');
+  typingImage.position(500,150);
+  
+
+  game2Lvl1Button = createImg('libraries/lvl1Button.png');
+  game2Lvl1Button.position(250, 450);
+  game2Lvl1Button.mousePressed(() => playLevel(1));
+
+  game2Lvl2Button = createImg('libraries/lvl2Button.png');
+  game2Lvl2Button.position(550, 450);
+  game2Lvl2Button.mousePressed(() => playLevel(2));
+  
+
+  game2Lvl3Button = createImg('libraries/lvl3Button.png');
+  game2Lvl3Button.position(850, 450);
+  game2Lvl3Button.mousePressed(() => playLevel(3));
+
+  g2LevelSelect = createImg('libraries/levelSelect.png');
+  g2LevelSelect.position(0, 400);
+  g2LevelSelect.mousePressed(game2LvlSelect);
+  g2LevelSelect.hide();
+  
+  hideGame2LvlButtons();
 }
 
 function game2Setup() {
@@ -23,24 +47,18 @@ function game2Setup() {
   currentActivity = 2;
   onlyMMButton();
   game2Loaded = true;
+  game2TimerLoaded = true;
+  showGame2LvlButtons();
   
+  
+  image(typingImage, 100,100,100,100);
 
   background('#ADD8E6');
   textSize(32);
   fill('black');
   text("Welcome to the Typing Game! Pick a level", 500, 100);
 
-  game2Lvl1Button = createImg('libraries/lvl1Button.png');
-  game2Lvl1Button.position(200, 350);
-  game2Lvl1Button.mousePressed(() => playLevel(1));
-
-  game2Lvl2Button = createImg('libraries/lvl2Button.png');
-  game2Lvl2Button.position(500, 350);
-  game2Lvl2Button.mousePressed(() => playLevel(2));
-
-  game2Lvl3Button = createImg('libraries/lvl3Button.png');
-  game2Lvl3Button.position(800, 350);
-  game2Lvl3Button.mousePressed(() => playLevel(3));
+  
 }
 
 function game2Draw() {
@@ -116,20 +134,33 @@ function showTryAgainMessage() {
 
 function game2Lvl1Draw() {
   displayWords();
+  
 }
 
 function game2Lvl2Draw() {
   displayWords();
+  
 }
 
 function game2Lvl3Draw() {
   displayWords();
+  
 }
 
 function displayWords() {
   background('#ADD8E6');
   textSize(32);
   text("You can do this!",550,100);
+
+  if(game2TimerLoaded === true && game2TimerValue < 120){
+    game2TimerValue = 120;
+    game2TimerLoaded = false;
+  }
+
+  if(game2TimerValue === 0){
+    game2LoserMenu();
+  }
+
   for (let i = 0; i < currentWord.length; i++) {
     if (typedWord[i]) {
       fill(typedWord[i] === currentWord[i] ? '#008000' : '#FF0000');
@@ -148,6 +179,14 @@ function hideGame2LvlButtons() {
   game2Lvl1Button.hide();
   game2Lvl2Button.hide();
   game2Lvl3Button.hide();
+  typingImage.hide();
+}
+
+function showGame2LvlButtons() {
+  game2Lvl1Button.show();
+  game2Lvl2Button.show();
+  game2Lvl3Button.show();
+  typingImage.show();
 }
 
 function game2CheckWinner(){
@@ -165,6 +204,7 @@ function game2Reset(){
   hideGame2LvlButtons();
   wordInput.hide();
   game2TimerValue = 120;
+  game2TimerLoaded = false;
   
 }
 
@@ -174,3 +214,14 @@ function game2TimeIt() {
   }
 }
 
+function game2LvlSelect(){
+  game2Reset();
+  game2Setup();
+}
+
+function game2LoserMenu(){
+  fill('black');
+  text("Not exactly. Try again you got this!",300, 50);
+  game2Reset();
+  g2LevelSelect.show();
+}

@@ -1,13 +1,14 @@
 
-let game3Lvl1Button, game3Lvl2Button, game3Lvl3Button;
+let game3Lvl1Button, game3Lvl2Button, game3Lvl3Button, g3LevelSelect;
 let game3loaded = false;
 let game3CurrentLevel;
 let game3Winner = false;
 
 let game3TimerValue = 120;
+let game3TimerLoaded = false;
 let game3Score = 0;
 
-var w, h; 
+ 
 
 let buttonImage, shirtImage, guyButtoningImage, confetti, hornImage, hornImage2, hornImage3, buttonImage2
 
@@ -21,6 +22,32 @@ function game3Preload() {
   buttonImage2 = loadImage("Game3/redButton.png");
   guyButtoningImage = loadImage("Game3/guyButtoningShirt.jpg");
 
+  setInterval(game3TimeIt, 1000);
+
+  game3Lvl1Button = createImg('libraries/lvl1Button.png');
+  game3Lvl1Button.position(250, 450);
+  game3Lvl1Button.mousePressed(game3Lvl1Draw );
+  game3Lvl1Button.hide();
+
+  game3Lvl2Button = createImg('libraries/lvl2Button.png');
+  game3Lvl2Button.position(550, 450);
+  game3Lvl2Button.mousePressed(game3Lvl2Draw);
+  game3Lvl2Button.hide();
+
+  game3Lvl3Button = createImg('libraries/lvl3Button.png');
+  game3Lvl3Button.position(850, 450);
+  game3Lvl3Button.mousePressed(game3Lvl3Draw);
+  game3Lvl3Button.hide();
+
+  g3LevelSelect = createImg('libraries/levelSelect.png');
+  g3LevelSelect.position(0, 400);
+  g3LevelSelect.mousePressed(game3LvlSelect);
+  g3LevelSelect.hide();
+
+  shirtImage = createImg("Game3/shirtNoButtons.png");
+  shirtImage.position(750, 0);
+  shirtImage.hide(); 
+
   
 }
 
@@ -28,13 +55,21 @@ function game3Setup() {
 
   createCanvas(windowWidth, windowHeight);
   background('#C8A2C8');
+  
 
-  setInterval(game3TimeIt, 1000);
+  game3TimerLoaded = true;
+  shirtImage.hide();
+  
+  game3Lvl1Button.show();
+  game3Lvl2Button.show();
+  game3Lvl3Button.show();
+  
+
+  
   game3loaded = true;
   onlyMMButton();
 
-  w = 100;
-  h = 100;
+  
 
   
   textSize(55);
@@ -43,22 +78,7 @@ function game3Setup() {
   text("Welcome to the buttoning game! Pick a level", 200, 100);
   image(guyButtoningImage, 380,150,600,300);
 
-  // Create the level buttons
-  game3Lvl1Button = createImg('libraries/lvl1Button.png');
-  game3Lvl1Button.position(200, 350);
-  game3Lvl1Button.mousePressed(game3Lvl1Draw );
-
-  game3Lvl2Button = createImg('libraries/lvl2Button.png');
-  game3Lvl2Button.position(500, 350);
-  game3Lvl2Button.mousePressed(game3Lvl2Draw);
-
-  game3Lvl3Button = createImg('libraries/lvl3Button.png');
-  game3Lvl3Button.position(800, 350);
-  game3Lvl3Button.mousePressed(game3Lvl3Draw);
-
-  shirtImage = createImg("Game3/shirtNoButtons.png");
-  shirtImage.position(750, 0);
-  shirtImage.hide();  
+ 
   
   currentActivity = 3;
 }
@@ -84,21 +104,12 @@ function game3Draw(){
   }
 
 } 
-//tis function is essentially unused in gameplay i just use it for debugging
-function game3MousePressed() {
-  
-  
-  console.log(mouseX,mouseY);
-  console.log(game3Winner);
-  console.log(game3CurrentLevel);
-  
-}
 
 function game3Lvl1Draw() {
-
 //create the background and hide the buttons
   
   shirtImage.show();
+  
   
   
   background('#C8A2C8');
@@ -107,8 +118,17 @@ function game3Lvl1Draw() {
   if(!game3Winner){
     game3CurrentLevel = 1;
     
+    
   }
 
+  if(game3TimerValue === 0){
+    game3LoserMenu();
+  }
+
+  if(game3TimerLoaded === true && game3TimerValue < 120){
+    game3TimerValue = 120;
+    game3TimerLoaded = false;
+  }
   
   if(game3CurrentLevel === 1){
 
@@ -120,21 +140,7 @@ function game3Lvl1Draw() {
     console.log("checked bottom");
 
     //checks if the user is close the button holes
-    if(mouseX >= 700 && mouseY <= 450 && mouseY >= 250 && !game3Winner){
-      textSize(48);
-      fill('black');
-      text("Keep going you're almost there", 250, 200);
-    }
-    //Some advice and encouragement for the user
-    if(!game3Winner && game3CurrentLevel != 0){
-      textSize(48);
-      fill('black');
-      text("You got this!",450, 50);
-
-      textSize(32);
-      text("Put the button in either hole",325,150);
-      game3CurrentLevel = 1;
-    }
+    game3Feedback();
 
     //displays the timer
     if (game3TimerValue >= 0) {
@@ -143,7 +149,7 @@ function game3Lvl1Draw() {
     
 
   }
-  image(buttonImage, mouseX-50, mouseY-50, w, h);
+  image(buttonImage, mouseX-50, mouseY-50, 100, 100);
 
   
 }
@@ -162,7 +168,15 @@ function game3Lvl2Draw() {
     
   }
 
-  
+  if(game3TimerValue === 0){
+    game3LoserMenu();
+  }
+
+  if(game3TimerLoaded === true && game3TimerValue < 120){
+    game3TimerValue = 120;
+    game3TimerLoaded = false;
+  }
+
   if(game3CurrentLevel === 2){
 
     if(keyIsDown(ENTER)){
@@ -172,21 +186,7 @@ function game3Lvl2Draw() {
       checkBottomButton();
       }
 
-    if(mouseX >= 700 && mouseY <= 450 && mouseY >= 250 && !game3Winner){
-      textSize(42);
-      fill('black');
-      text("Keep going you're almost there", 250, 200);
-      text("Hold enter to open the buttonhole",200,275);
-    }
-    //Some advice and encouragement for the user
-    if(!game3Winner && game3CurrentLevel != 0){
-      textSize(42);
-      fill('black');
-      text("You got this!",450, 50);
-
-      textSize(32);
-      text("Put the button in either hole",325,150);
-    }
+    game3Feedback();
 
     //displays the timer
     if (game3TimerValue >= 0) {
@@ -194,7 +194,7 @@ function game3Lvl2Draw() {
     }
   }
 
-  image(buttonImage, mouseX-50, mouseY-50, w, h);
+  image(buttonImage, mouseX-50, mouseY-50, 100, 100);
 
 }
 
@@ -212,6 +212,14 @@ function game3Lvl3Draw() {
     
   }
 
+  if(game3TimerValue === 0){
+    game3LoserMenu();
+  }
+
+  if(game3TimerLoaded === true && game3TimerValue < 120){
+    game3TimerValue = 120;
+    game3TimerLoaded = false;
+  }
   
   if(game3CurrentLevel === 3){
 
@@ -221,21 +229,21 @@ function game3Lvl3Draw() {
   
       }
 
-    if(mouseX >= 700 && mouseY <= 450 && mouseY >= 250 && !game3Winner){
-      textSize(42);
-      fill('black');
-      text("Keep going you're almost there", 250, 200);
-      text("Hold enter to open the buttonhole",200,275);
-    }
-    //Some advice and encouragement for the user
-    if(!game3Winner && game3CurrentLevel != 0){
-      textSize(42);
-      fill('black');
-      text("You got this!",450, 50);
-
-      textSize(32);
-      text("Put the button in the top hole",325,150);
-    }
+      if(mouseX >= 700 && mouseY <= 600 && mouseY >= 250 && !game3Winner){
+        textSize(42);
+        fill('black');
+        text("Keep going you're almost there", 250, 200);
+        text("Hold enter to open the buttonhole",200,275);
+      }
+      //Some advice and encouragement for the user
+      if(!game3Winner && game3CurrentLevel != 0){
+        textSize(42);
+        fill('black');
+        text("You got this!",450, 50);
+    
+        textSize(32);
+        text("Put the button in the top hole",325,150);
+      }
 
     //displays the timer
     if (game3TimerValue >= 0) {
@@ -243,7 +251,7 @@ function game3Lvl3Draw() {
     }
   }
 
-  image(buttonImage, mouseX-50, mouseY-50, w, h);
+  image(buttonImage, mouseX-50, mouseY-50, 100, 100);
 }
 
 function game3Lvl3DrawPart2() {
@@ -251,8 +259,16 @@ function game3Lvl3DrawPart2() {
   
   background('#C8A2C8');
   image(buttonImage2,1075,330,w,h);
+
+  if(game3TimerLoaded === true && game3TimerValue < 120){
+    game3TimerValue = 120;
+    game3TimerLoaded = false;
+  }
   
-  
+  if(game3TimerValue === 0){
+    game3LoserMenu();
+  }
+
   if(game3CurrentLevel === 4){
 
     if(keyIsDown(ENTER)){
@@ -261,27 +277,28 @@ function game3Lvl3DrawPart2() {
   
       }
 
-    if(mouseX >= 700 && mouseY <= 650 && mouseY >= 250 && !game3Winner){
-      textSize(42);
-      fill('black');
-      text("Hold enter to open the buttonhole",200,275);
-    }
-    //Some advice and encouragement for the user
-    if(!game3Winner && game3CurrentLevel != 0){
-      textSize(42);
-      fill('black');
-      text("Nice job 1 down 1 to go!",450, 50);
-
-      textSize(32);
-      text("Put the button in the bottom hole",325,150);
-    }
+      if(mouseX >= 700 && mouseY <= 600 && mouseY >= 250 && !game3Winner){
+        textSize(42);
+        fill('black');
+        text("Keep going you're almost there", 250, 200);
+        text("Hold enter to open the buttonhole",200,275);
+      }
+      //Some advice and encouragement for the user
+      if(!game3Winner && game3CurrentLevel != 0){
+        textSize(42);
+        fill('black');
+        
+    
+        textSize(32);
+        text("Put the button in the bottom hole",325,150);
+      }
 
     //displays the timer
     if (game3TimerValue >= 0) {
       text("Time left:" + game3TimerValue, 40, 230);
     }
   }
-  image(buttonImage, mouseX-50, mouseY-50, w, h);
+  image(buttonImage, mouseX-50, mouseY-50, 100, 100);
 }
 
 //function to hide the game 3 buttons
@@ -302,6 +319,8 @@ function resetGame3(){
   shirtImage.hide();
   game3Winner = false;
   game3TimerValue = 120;
+  game3TimerLoaded = false;
+  g3LevelSelect.hide();
   
 }
 
@@ -343,10 +362,11 @@ function winnerWinner3(){
     game3getScore();
     
 
+    g3LevelSelect.show();
     textSize(48);
     fill('black');
     text("Congrats you won", 500, 100);
-    text("Heres your score:" + game3Score, 40,500)
+    text("Score:" + game3Score, 40,400)
 }
 
 //timing function
@@ -359,4 +379,34 @@ function game3TimeIt() {
 
 function game3getScore(){
   game3Score = game3TimerValue * 152;
+}
+
+function game3Feedback(){
+  if(mouseX >= 700 && mouseY <= 600 && mouseY >= 250 && !game3Winner){
+    textSize(42);
+    fill('black');
+    text("Keep going you're almost there", 250, 200);
+    text("Hold enter to open the buttonhole",200,275);
+  }
+  //Some advice and encouragement for the user
+  if(!game3Winner && game3CurrentLevel != 0){
+    textSize(42);
+    fill('black');
+    text("You got this!",450, 50);
+
+    textSize(32);
+    text("Put the button in either hole",325,150);
+  }
+}
+
+function game3LvlSelect(){
+  resetGame3();
+  game3Setup();
+}
+
+function game3LoserMenu(){
+  fill('black');
+  text("Not exactly. Try again you got this!",450, 50);
+  game3CurrentLevel = 0;
+  g3LevelSelect.show();
 }
