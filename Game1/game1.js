@@ -3,8 +3,14 @@ let tracedPoints = [];
 let pointSize = 5;
 let isDrawing = false;
 let score = 0;
+let owlImage;
 
-function setup() {
+function game1Preload(){
+  owlImage = loadImage("Game1/owlCarving.jpg");
+
+}
+
+function game1Setup() {
   createCanvas(400, 400);
   
   // Define the target shape (square)
@@ -25,7 +31,7 @@ function setup() {
   }
 }
 
-function draw() {
+function game1Draw() {
   background(220);
   
   // Draw target shape (shadow or frame)
