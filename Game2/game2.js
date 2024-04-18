@@ -114,6 +114,7 @@ function showCorrectMessage() {
   fill('black');
   text("Congratulations! You've won!", width / 2, height / 2 - 20);
   text("Click to play again", width / 2, height / 2 + 20);
+  getScore(game2TimerValue);
   wordInput.hide();
   
 }

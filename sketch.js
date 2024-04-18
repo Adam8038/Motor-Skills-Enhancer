@@ -132,6 +132,7 @@
   
   function mousePressed(){
     switch(currentActivity){
+      case 1: game1MousePressed(); break;
       case 4: game4MousePressed(); break;
     }
       
@@ -139,7 +140,17 @@
 
   function mouseReleased(){
 
-      game4MouseReleased();
+    switch(currentActivity){
+      case 1: game1MouseReleased(); break;
+      case 4: game4MouseReleased(); break;
+    }
+  }
+
+  function mouseDragged(){
+    
+    switch(currentActivity){
+      case 1: game1MouseDragged(); break;
+    }
   }
 
   
@@ -175,5 +186,13 @@
       game3Button.position(850, 450);
       game4Button.position(1200, 450);
   
+    }
+
+    function getScore(levelTimerValue){
+      let score = 0;
+
+      score = levelTimerValue * 152;
+
+      text("Score:" + score, 40,400);
     }
   

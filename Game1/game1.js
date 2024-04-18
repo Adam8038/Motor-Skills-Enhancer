@@ -1,44 +1,57 @@
-let targetShape = [];
-let tracedPoints = [];
-let pointSize = 5;
-let isDrawing = false;
-let score = 0;
+let shapePoints = [];
+let shadowPoints = [];
+let isDragging = false;
 
 function game1Preload(){
-  // Preload resources if necessary
+  
 }
 
 function game1Setup() {
   createCanvas(windowWidth, windowHeight);
-  
-  // Define the target shape (square)
-  let targetSize = 100;
-  let targetX = (width - targetSize) / 2;
-  let targetY = (height - targetSize) / 2;
+  currentActivity = 1;
+  onlyMMButton();
+}
 
-  for (let game1x = targetX; game1x < targetX + targetSize; game1x += pointSize) {
-    targetShape.push(createVector(game1x, targetY));
-  }
-  for (let game1y = targetY; game1y < targetY + targetSize; game1y += pointSize) {
-    targetShape.push(createVector(targetX + targetSize, game1y));
-  }
-  for (let game1x = targetX + targetSize; game1x > targetX; game1x -= pointSize) {
-    targetShape.push(createVector(game1x, targetY + targetSize));
-  }
-  for (let game1y = targetY + targetSize; game1y > targetY; game1y -= pointSize) {
-    targetShape.push(createVector(targetX, game1y));
+
+function game1Draw() {
+  background(220); // Set background color
+
+  // Draw shadow
+  stroke(150, 150, 150, 100); // Semi-transparent gray stroke
+  noFill(); // No fill for the shapes
+  beginShape();
+  shadowPoints.forEach(point => {
+    vertex(point.x, point.y); // Draw each point in the shadow
+  });
+  endShape(CLOSE);
+
+  // Draw shape
+  stroke(0); // Black stroke for the shape
+  beginShape();
+  shapePoints.forEach(point => {
+    vertex(point.x, point.y); // Draw each point in the shape
+  });
+  endShape(CLOSE);
+}
+
+function game1MousePressed() {
+  // Ensure that mouse press only triggers dragging if it starts within the canvas
+  if (mouseX >= 0 && mouseX <= windowWidth && mouseY >= 0 && mouseY <= windowHeight) {
+    isDragging = true;
+    shapePoints = []; // Clear previous shape points
+    shadowPoints = []; // Clear previous shadow points
   }
 }
 
-function game1Draw() {
-  background(220);
-  
-  // Draw target shape (shadow or frame)
-  noFill();
-  stroke(150);
-  beginShape();
-  for (let point of targetShape) {
-    vertex(point.x, point.y);
+function game1MouseDragged() {
+  if (isDragging) {
+    const offsetX = 5; // Offset for shadow x-coordinate
+    const offsetY = 5; // Offset for shadow y-coordinate
+    shadowPoints.push(createVector(mouseX + offsetX, mouseY + offsetY));
+    shapePoints.push(createVector(mouseX, mouseY));
   }
-  endShape(CLOSE);  // Ensure the shape is closed
+}
+
+function game1MouseReleased() {
+  isDragging = false; // Stop dragging when mouse is released
 }

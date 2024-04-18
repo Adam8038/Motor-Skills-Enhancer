@@ -258,7 +258,7 @@ function game3Lvl3DrawPart2() {
 
   
   background('#C8A2C8');
-  image(buttonImage2,1075,330,w,h);
+  image(buttonImage2,1075,330,100,100);
 
   if(game3TimerLoaded === true && game3TimerValue < 120){
     game3TimerValue = 120;
@@ -377,9 +377,7 @@ function game3TimeIt() {
 }
 
 
-function game3getScore(){
-  game3Score = game3TimerValue * 152;
-}
+
 
 function game3Feedback(){
   if(mouseX >= 700 && mouseY <= 600 && mouseY >= 250 && !game3Winner){

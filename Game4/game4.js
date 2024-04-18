@@ -76,7 +76,7 @@ function game4Lvl1Draw() {
     draggable.show();
     
   }
-  game4checkWinCondition();
+  
 
   if(game4Winner === true){
     game4WinScreen();
@@ -107,8 +107,7 @@ function game4MousePressed(){
   if(game4CurrentLevel > 0 ){
     for (let draggable of draggables) {
       draggable.pressed();
-      
-       // Call pressed for each draggable
+
     }
   }
   console.log(draggables);
@@ -119,8 +118,8 @@ function game4MouseReleased(){
     for (let draggable of draggables) {
       draggable.released();
       
-       // Call released for each draggable
     }
+    game4checkWinCondition();
   }
 }
 
@@ -131,6 +130,7 @@ function game4Reset(){
   game4Winner = false;
   draggablesCreated = false;
   g4LevelSelect.hide();
+  clearDraggables();
   
 }
 
@@ -165,9 +165,9 @@ function game4Feedback(){
 }
 
 function game4checkWinCondition() {
-  // Tolerance for how close x positions should be to consider draggables aligned
+  // tolerance for how close x positions should be to consider draggables aligned
   const xTolerance = 5;
-  // Additional tolerance for y positioning to allow slight gaps
+  // tolerance for y positioning to allow slight gaps
   const yTolerance = 5;
 
   let baseX = draggables[0].x;  // Use the first draggable's x as the base for comparison
@@ -208,8 +208,13 @@ function game4WinScreen(){
     text("Congrats you won", 500, 100);
     game4Reset();
     g4LevelSelect.show();
+    clearDraggables();
 }
 
+
+function clearDraggables() {
+  draggables = [];  // Reset the array to empty
+}
 
 
 /////////////////////////////////////////////////////////////////////////////Below is the draggable class to create draggable objects//////////////////////////////////////////////
