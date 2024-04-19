@@ -4,18 +4,64 @@ let targetPoints = []; // Array to store points of the target shape
 let isDragging = false; // Flag to indicate mouse dragging
 let maxDistance = 10; // Maximum distance to count as tracing the shape
 
+let game1Lvl1Button, game1Lvl2Button ,game1Lvl3Button
+
+let game1CurrentLevel = 0;
+
 function game1Preload() {
   // Preload necessary assets if any
+  game1Lvl1Button = createImg('libraries/lvl1Button.png');
+  game1Lvl1Button.position(250, 450);
+  game1Lvl1Button.mousePressed(game1Lvl1Draw);
+
+  game1Lvl2Button = createImg('libraries/lvl2Button.png');
+  game1Lvl2Button.position(550, 450);
+  game1Lvl2Button.mousePressed(game1Lvl2Draw);
+  
+
+  game1Lvl3Button = createImg('libraries/lvl3Button.png');
+  game1Lvl3Button.position(850, 450);
+  game1Lvl3Button.mousePressed(game1Lvl3Draw);
+
+  game1HideButtons();
 }
 
 function setupTargetShape() {
-  // Define a simple triangle as the target shape
+  // Define a triangle as the target shape
+  if(game1CurrentLevel === 1){
   targetPoints.push(createVector(width / 2, height / 4));
   targetPoints.push(createVector(width / 4, 3 * height / 4));
   targetPoints.push(createVector(3 * width / 4, 3 * height / 4));
+  }
+
+  // Define a square as the target shape for level 2
+  if(game1CurrentLevel === 2){
+  targetPoints.push(createVector(width / 4, height / 4));
+  targetPoints.push(createVector(width / 4, 3 * height / 4));
+  targetPoints.push(createVector(3 * width / 4, 3 * height / 4));
+  targetPoints.push(createVector(3 * width / 4, height / 4));
+  }
+
+  // Define a star as the target shape for level 3
+  if(game1CurrentLevel === 3){
+  const starRadius = min(width, height) / 4;
+  const cx = width / 2;
+  const cy = height / 2;
+  const numPoints = 5;
+  const angleIncrement = TWO_PI / numPoints;
+  for (let i = 0; i < numPoints * 2; i++) {
+    const angle = i * angleIncrement;
+    const radius = i % 2 === 0 ? starRadius : starRadius / 2;
+    const x = cx + cos(angle) * radius;
+    const y = cy + sin(angle) * radius;
+    targetPoints.push(createVector(x, y));
+  }
+}
 }
 
 function game1Setup() {
+
+  game1ShowButtons();
   createCanvas(windowWidth, windowHeight);
   setupTargetShape();
   currentActivity = 1;
@@ -23,11 +69,26 @@ function game1Setup() {
 }
 
 function game1Draw() {
+  switch(game1CurrentLevel){
+    case 1: game1Lvl1Draw(); break;
+    case 2: game1Lvl2Draw(); break;
+    case 3: game1Lvl3Draw(); break;
+  }
+}
+
+function game1Lvl1Draw(){
+
   background(220); // Set background color
+  
+  if(game1CurrentLevel != 1){
+    game1CurrentLevel = 1;
+    setupTargetShape();
+  }
+  game1HideButtons();
 
   // Draw the target shape
   noFill();
-  strokeWeight(5); // Increase shape thickness
+  strokeWeight(10); // Increase shape thickness
   stroke(200, 0, 0); // Red color for target shape
   beginShape();
   for (let i = 0; i < targetPoints.length; i++) {
@@ -37,7 +98,7 @@ function game1Draw() {
 
   // Draw shadow
   noFill();
-  strokeWeight(3); // Increase pencil thickness
+  strokeWeight(5); // Increase pencil thickness
   stroke(150, 150, 150, 100); // Semi-transparent gray
   beginShape();
   for (let i = 0; i < shadowPoints.length; i++) {
@@ -47,7 +108,7 @@ function game1Draw() {
 
   // Draw user's shape
   noFill();
-  strokeWeight(3); // Increase pencil thickness
+  strokeWeight(5); // Increase pencil thickness
   stroke(0); // Black color for user's shape
   beginShape();
   for (let i = 0; i < shapePoints.length; i++) {
@@ -60,6 +121,102 @@ function game1Draw() {
   fill(0);
   textSize(20);
   text("Score: " + score.toFixed(2) + "%", 200, 40);
+}
+
+function game1Lvl2Draw(){
+
+  background(220); // Set background color
+  
+  if(game1CurrentLevel != 2){
+    game1CurrentLevel = 2;
+    setupTargetShape();
+  }
+  game1HideButtons();
+
+  // Draw the target shape
+  noFill();
+  strokeWeight(10); // Increase shape thickness
+  stroke(200, 0, 0); // Red color for target shape
+  beginShape();
+  for (let i = 0; i < targetPoints.length; i++) {
+    vertex(targetPoints[i].x, targetPoints[i].y);
+  }
+  endShape(CLOSE);
+
+  // Draw shadow
+  noFill();
+  strokeWeight(5); // Increase pencil thickness
+  stroke(150, 150, 150, 100); // Semi-transparent gray
+  beginShape();
+  for (let i = 0; i < shadowPoints.length; i++) {
+    vertex(shadowPoints[i].x, shadowPoints[i].y);
+  }
+  endShape();
+
+  // Draw user's shape
+  noFill();
+  strokeWeight(5); // Increase pencil thickness
+  stroke(0); // Black color for user's shape
+  beginShape();
+  for (let i = 0; i < shapePoints.length; i++) {
+    vertex(shapePoints[i].x, shapePoints[i].y);
+  }
+  endShape();
+
+  // Display score
+  let score = calculateScore();
+  fill(0);
+  textSize(20);
+  text("Score: " + score.toFixed(2) + "%", 200, 40);
+  
+}
+
+function game1Lvl3Draw(){
+
+  background(220); // Set background color
+  
+  if(game1CurrentLevel != 3){
+    game1CurrentLevel = 3;
+    setupTargetShape();
+  }
+  game1HideButtons();
+
+  // Draw the target shape
+  noFill();
+  strokeWeight(10); // Increase shape thickness
+  stroke(200, 0, 0); // Red color for target shape
+  beginShape();
+  for (let i = 0; i < targetPoints.length; i++) {
+    vertex(targetPoints[i].x, targetPoints[i].y);
+  }
+  endShape(CLOSE);
+
+  // Draw shadow
+  noFill();
+  strokeWeight(5); // Increase pencil thickness
+  stroke(150, 150, 150, 100); // Semi-transparent gray
+  beginShape();
+  for (let i = 0; i < shadowPoints.length; i++) {
+    vertex(shadowPoints[i].x, shadowPoints[i].y);
+  }
+  endShape();
+
+  // Draw user's shape
+  noFill();
+  strokeWeight(5); // Increase pencil thickness
+  stroke(0); // Black color for user's shape
+  beginShape();
+  for (let i = 0; i < shapePoints.length; i++) {
+    vertex(shapePoints[i].x, shapePoints[i].y);
+  }
+  endShape();
+
+  // Display score
+  let score = calculateScore();
+  fill(0);
+  textSize(20);
+  text("Score: " + score.toFixed(2) + "%", 200, 40);
+  
 }
 
 function game1MousePressed() {
@@ -110,4 +267,16 @@ function distToSegment(p, v, w) {
 
 function game1MouseReleased() {
   isDragging = false; // Stop dragging when mouse is released
+}
+
+function game1HideButtons(){
+  game1Lvl1Button.hide();
+  game1Lvl2Button.hide();
+  game1Lvl3Button.hide();
+}
+
+function game1ShowButtons(){
+  game1Lvl1Button.show();
+  game1Lvl2Button.show();
+  game1Lvl3Button.show();
 }
