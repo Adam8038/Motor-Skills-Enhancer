@@ -55,7 +55,7 @@ function game2Setup() {
 
   background(typingGameBackground);
   textSize(32);
-  fill('black');
+  fill('white');
   text("Welcome to the Typing Game! Pick a level", 500, 100);
 
   
@@ -75,7 +75,7 @@ function playLevel(level) {
   hideGame2LvlButtons();
   background(typingGameBackground);
   textSize(24);
-  fill('black');
+  fill('white');
   text("Playing Level " + level, width / 2, 50);
   currentWord = getRandomWord(level);
   typedWord = "";
@@ -111,7 +111,7 @@ function checkTyping() {
 function showCorrectMessage() {
   background('#ADD8E6'); // Light green background on win
   textSize(32);
-  fill('black');
+  fill('white');
   text("Congratulations! You've won!", width / 2, height / 2 - 20);
   text("Click to play again", width / 2, height / 2 + 20);
   getScore(game2TimerValue);
@@ -122,14 +122,14 @@ function showCorrectMessage() {
 function showIncorrectMessage() {
   background('#FF6347'); // Tomato red background on error
   textSize(24);
-  fill('black');
+  fill('white');
   text("Not quite. Try again", width / 2, height / 2);
 }
 
 function showTryAgainMessage() {
   background('#FF6347'); // Consistent error background
   textSize(24);
-  fill('black');
+  fill('white');
   text("Out of attempts! Click to restart", width / 2, height / 2);
 }
 
@@ -166,7 +166,7 @@ function displayWords() {
     if (typedWord[i]) {
       fill(typedWord[i] === currentWord[i] ? '#008000' : '#FF0000');
     } else {
-      fill(0);
+      fill('white');
     }
     text(currentWord[i], (i + 0.5) * (width / currentWord.length), height / 2);
     game2CheckWinner();
@@ -221,7 +221,7 @@ function game2LvlSelect(){
 }
 
 function game2LoserMenu(){
-  fill('black');
+  fill('white');
   text("Not exactly. Try again you got this!",300, 50);
   game2Reset();
   g2LevelSelect.show();

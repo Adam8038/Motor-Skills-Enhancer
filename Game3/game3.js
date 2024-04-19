@@ -115,7 +115,7 @@ function game3Lvl1Draw() {
   
   
   
-  background('#C8A2C8');
+  background(gameBG);
   hideGame3LvlButtons();
   
   if(!game3Winner){

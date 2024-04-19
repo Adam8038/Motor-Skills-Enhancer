@@ -1,9 +1,10 @@
   let currentActivity = 0;
-  let menuButton, game1Button, game2Button, game3Button, game4Button, mainMenuBG;  
+  let menuButton, game1Button, game2Button, game3Button, game4Button, mainMenuBG, gameBG;  
 
   function preload(){
     
     mainMenuBG = loadImage("libraries/mainMenuBG.png");
+    gameBG = loadImage("libraries/gameBG.png");
     game1Preload();
     game2Preload();
     game3Preload();
