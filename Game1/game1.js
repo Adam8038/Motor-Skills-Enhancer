@@ -3,6 +3,9 @@ let shadowPoints = []; // Array to store points of the shadow
 let targetPoints = []; // Array to store points of the target shape
 let isDragging = false; // Flag to indicate mouse dragging
 let maxDistance = 10; // Maximum distance to count as tracing the shape
+let shapeSessions = []; 
+let currentShape = [];
+let startNewDrag = false;
 
 let game1Lvl1Button, game1Lvl2Button ,game1Lvl3Button, drawingBG;
 let game1Loaded = false;
@@ -122,6 +125,8 @@ function game1Lvl1Draw(){
   }
   endShape();
 
+  
+
   // Display score
   let score = calculateScore();
   fill(0);
@@ -170,9 +175,12 @@ function game1Lvl2Draw(){
   }
   endShape();
 
+  drawShapeSessions();
+
   // Display score
   let score = calculateScore();
   fill(0);
+  strokeWeight(2);
   textSize(20);
   text("Score: " + score.toFixed(2) + "%", 200, 40);
   
@@ -218,34 +226,91 @@ function game1Lvl3Draw(){
   }
   endShape();
 
+  drawShapeSessions();
   // Display score
   let score = calculateScore();
   fill(0);
+  strokeWeight(2);
   textSize(20);
   text("Score: " + score.toFixed(2) + "%", 200, 40);
   
 }
 
+
 function game1MousePressed() {
   if (mouseX > 0 && mouseX < width && mouseY > 0 && mouseY < height) {
     isDragging = true;
+    startNewDrag = true; // Signal that a new drag session is starting
+    // Start fresh for the new shape
+    // Only start a new shape session if the mouse was released before
+    if (currentShape.length > 0) {
+      shapeSessions.push(currentShape);
+      currentShape = [];
+    }
   }
 }
 
 function game1MouseDragged() {
-  if (isDragging) {
-    shadowPoints.push(createVector(mouseX, mouseY)); // Add points to shadow
-    shapePoints.push(createVector(mouseX, mouseY)); // Add points to shape
+  if (isDragging && mouseX > 0 && mouseX < width && mouseY > 0 && mouseY < height) {
+    // Add new points to the current shape session
+    currentShape.push(createVector(mouseX, mouseY)); 
   }
 }
 
-function calculateScore() {
-  let score = 0;
-  let totalTraced = 0; // Total number of points traced along the shape
+function game1MouseReleased() {
+  if (isDragging) {
+    if (currentShape.length > 0) {
+      shapeSessions.push(currentShape); // Save the completed shape session
+    }
+    currentShape = [];
+    isDragging = false;
+    startNewDrag = false; // Ensure the drag session flag is reset
+  }
+}
 
-  // Loop through each point in the user's shape
+
+
+
+// Function to draw all sessions of shapes
+function drawShapeSessions() {
+  noFill();
+  strokeWeight(10); // Set the stroke weight for drawing
+  stroke(0); // Set the stroke color (black for the user's shape)
+
+  // Draw completed sessions
+  for (let session of shapeSessions) {
+    beginShape();
+    for (let vec of session) {
+      vertex(vec.x, vec.y);
+    }
+    endShape();
+  }
+
+  // Draw current session in progress
+  if (isDragging) {
+    beginShape();
+    for (let vec of currentShape) {
+      vertex(vec.x, vec.y);
+    }
+    endShape();
+  }
+}
+
+
+function calculateScore() {
+  let totalTraced = 0; // Total number of points traced along the shape
+  shapePoints = []; // Reset shapePoints to gather all points
+
+  // Accumulate all points from past sessions
+  for (let session of shapeSessions) {
+    shapePoints.push(...session);
+  }
+
+  // Include the current session in the scoring
+  shapePoints.push(...currentShape);
+
+  // Loop through each point in shapePoints to calculate the score
   for (let i = 0; i < shapePoints.length; i++) {
-    // Check if the point is close to any line segment of the target shape
     for (let j = 0; j < targetPoints.length; j++) {
       let nextIndex = (j + 1) % targetPoints.length;
       let dist = distToSegment(shapePoints[i], targetPoints[j], targetPoints[nextIndex]);
@@ -258,8 +323,7 @@ function calculateScore() {
 
   // Calculate the score as a percentage of points traced along the shape
   let totalPoints = shapePoints.length;
-  score = (totalTraced / totalPoints) * 100;
-  return score;
+  return totalPoints > 0 ? (totalTraced / totalPoints) * 100 : 0;
 }
 
 // Function to calculate the distance from a point to a line segment
@@ -272,9 +336,6 @@ function distToSegment(p, v, w) {
   return dist(p.x, p.y, projection.x, projection.y); // Return distance from point to projection
 }
 
-function game1MouseReleased() {
-  isDragging = false; // Stop dragging when mouse is released
-}
 
 function game1HideButtons(){
   game1Lvl1Button.hide();
