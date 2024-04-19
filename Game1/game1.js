@@ -4,24 +4,27 @@ let targetPoints = []; // Array to store points of the target shape
 let isDragging = false; // Flag to indicate mouse dragging
 let maxDistance = 10; // Maximum distance to count as tracing the shape
 
-let game1Lvl1Button, game1Lvl2Button ,game1Lvl3Button
+let game1Lvl1Button, game1Lvl2Button ,game1Lvl3Button, drawingBG;
+let game1Loaded = false;
 
 let game1CurrentLevel = 0;
 
 function game1Preload() {
   // Preload necessary assets if any
   game1Lvl1Button = createImg('libraries/lvl1Button.png');
-  game1Lvl1Button.position(250, 450);
+  game1Lvl1Button.position(windowWidth -200, 0);
   game1Lvl1Button.mousePressed(game1Lvl1Draw);
 
   game1Lvl2Button = createImg('libraries/lvl2Button.png');
-  game1Lvl2Button.position(550, 450);
+  game1Lvl2Button.position(windowWidth -200, windowHeight/3 +50);
   game1Lvl2Button.mousePressed(game1Lvl2Draw);
   
 
   game1Lvl3Button = createImg('libraries/lvl3Button.png');
-  game1Lvl3Button.position(850, 450);
+  game1Lvl3Button.position(windowWidth -200, windowHeight-200);
   game1Lvl3Button.mousePressed(game1Lvl3Draw);
+
+  drawingBG =loadImage("libraries/drawingBG.png");
 
   game1HideButtons();
 }
@@ -63,10 +66,11 @@ function game1Setup() {
 
   game1ShowButtons();
   createCanvas(windowWidth, windowHeight);
+  background(drawingBG);
   setupTargetShape();
   currentActivity = 1;
   onlyMMButton(); // Ensure this function is defined in your project
-
+  game1Loaded = true;
   strokeWeight(2);
 }
 

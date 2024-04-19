@@ -32,17 +32,17 @@ function game3Preload() {
   setInterval(game3TimeIt, 1000);
 
   game3Lvl1Button = createImg('libraries/lvl1Button.png');
-  game3Lvl1Button.position(windowWidth/3, windowHeight - 200);
+  game3Lvl1Button.position(windowWidth -200, 0);
   game3Lvl1Button.mousePressed(game3Lvl1Draw );
   game3Lvl1Button.hide();
 
   game3Lvl2Button = createImg('libraries/lvl2Button.png');
-  game3Lvl2Button.position(550, 450);
+  game3Lvl2Button.position(windowWidth -200, windowHeight/3 +50);
   game3Lvl2Button.mousePressed(game3Lvl2Draw);
   game3Lvl2Button.hide();
 
   game3Lvl3Button = createImg('libraries/lvl3Button.png');
-  game3Lvl3Button.position(850, 450);
+  game3Lvl3Button.position(windowWidth -200, windowHeight-200);
   game3Lvl3Button.mousePressed(game3Lvl3Draw);
   game3Lvl3Button.hide();
 
@@ -228,7 +228,7 @@ function game3Lvl3Draw() {
     game3TimerValue = 120;
     game3TimerLoaded = false;
   }
-  
+  game3Feedback()
   if(game3CurrentLevel === 3){
 
     if(keyIsDown(ENTER)){
@@ -237,20 +237,7 @@ function game3Lvl3Draw() {
   
       }
 
-      if(mouseX >= 700 && mouseY <= 600 && mouseY >= 250 && !game3Winner){
-        textSize(42);
-        fill('white');
-        text("Hold enter to open the hole",200,275);
-      }
-      //Some advice and encouragement for the user
-      if(!game3Winner && game3CurrentLevel != 0){
-        textSize(42);
-        fill('white');
-        text("You got this!",450, 50);
-    
-        textSize(48);
-        text("Put the button in the top hole",325,150);
-      }
+      
 
     //displays the timer
     if (game3TimerValue >= 0) {
@@ -264,8 +251,8 @@ function game3Lvl3Draw() {
 function game3Lvl3DrawPart2() {
 
   
-  background('#C8A2C8');
-  image(buttonImage2,1075,330,100,100);
+  background(gameBG);
+  image(buttonImage2,winningX-50,winningYTop-50);
 
   if(game3TimerLoaded === true && game3TimerValue < 120){
     game3TimerValue = 120;
@@ -275,7 +262,7 @@ function game3Lvl3DrawPart2() {
   if(game3TimerValue === 0){
     game3LoserMenu();
   }
-
+  game3Feedback()
   if(game3CurrentLevel === 4){
 
     if(keyIsDown(ENTER)){
@@ -284,20 +271,7 @@ function game3Lvl3DrawPart2() {
   
       }
 
-      if(mouseX >= 700 && mouseY <= 600 && mouseY >= 250 && !game3Winner){
-        textSize(42);
-        fill('white');
-        text("Hold enter to open the hole",200,275);
-      }
-      //Some advice and encouragement for the user
-      if(!game3Winner && game3CurrentLevel != 0){
-        textSize(42);
-        fill('white');
-        
-    
-        textSize(48);
-        text("Put the button in the bottom hole",325,150);
-      }
+      
 
     //displays the timer
     if (game3TimerValue >= 0) {
@@ -363,6 +337,7 @@ function winnerWinner3(){
     
     background(winningScreen);  
     getScore(game3TimerValue);
+    image(buttonImage2,winningX-50,winningYTop-50);
     
     
 
@@ -384,19 +359,28 @@ function game3TimeIt() {
 
 
 function game3Feedback(){
-  if(mouseX >= 700 && mouseY <= 600 && mouseY >= 250 && !game3Winner){
+  if(mouseX >= 700 && mouseY <= 600 && mouseY >= 250 && !game3Winner && game3CurrentLevel >1){
     textSize(42);
     fill('white');
-    text("Hold enter to open the hole",200,275);
+    text("Hold enter to open the hole",50,275);
   }
   //Some advice and encouragement for the user
-  if(!game3Winner && game3CurrentLevel != 0){
+  if(!game3Winner && game3CurrentLevel <3){
     textSize(42);
     fill('white');
     text("You got this!",450, 50);
 
     textSize(48);
     text("Put the button in either hole",325,150);
+  }
+
+  if(game3CurrentLevel === 3){
+    textSize(48);
+    text("Put the button in the top hole",325,150);
+  }
+  if(game3CurrentLevel === 4){
+    textSize(48);
+    text("Put the button in the bottom hole",325,150);
   }
 }
 

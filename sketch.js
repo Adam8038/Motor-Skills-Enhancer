@@ -1,62 +1,12 @@
   let currentActivity = 0;
   let menuButton, game1Button, game2Button, game3Button, game4Button, mainMenuBG, gameBG;  
-  let winScreenBG;
+  let winningScreen;
 
   function preload(){
     
     mainMenuBG = loadImage("libraries/mainMenuBG.png");
     gameBG = loadImage("libraries/gameBG.png");
     winningScreen = loadImage("libraries/winScreenBG.png");
-    game1Preload();
-    game2Preload();
-    game3Preload();
-    game4Preload();
-
-    
-    
-  }
-
-  function switchToMM(){
-    background(mainMenuBG);
-    
-    currentActivity = 0;
-    recenterButtons();
-    
-    allMMButtons();
-    textSize(72);
-    
-    if(game2Loaded === true){
-      
-      game2Reset();
-    }
-    
-    if(game3loaded === true){
-      resetGame3();
-      
-    }
-
-    if(game4Loaded === true){
-      game4Reset();
-      game4Loaded = false;
-    }
-
-    textSize(24);
-    
-    fill('black');
-
-     
-    // Hide the home page button, show the activity buttons
-  }
-
-  function setup() {
-    createCanvas(windowWidth, windowHeight);
-    background(mainMenuBG);
-    
-    
-
-    textSize(24);
-    
-    fill('black');
 
     menuButton = createImg('libraries/menuButton.png');
     menuButton.position(0, 0);
@@ -82,6 +32,65 @@
     game4Button.position(windowWidth - 250, windowHeight - 250);
     game4Button.mousePressed(game4Setup);
     game4Button.show();
+
+
+    game1Preload();
+    game2Preload();
+    game3Preload();
+    game4Preload();
+
+    
+    
+  }
+
+  function switchToMM(){
+    background(mainMenuBG);
+    
+    
+    currentActivity = 0;
+    recenterButtons();
+    
+    allMMButtons();
+    textSize(72);
+    if(game1Loaded === true){
+      game1HideButtons();
+    }
+    if(game2Loaded === true){
+      if(game2Winner === true){
+        g2LevelSelect.hide();
+        game2Winner = false;
+      }
+      game2Reset();
+    }
+    
+    if(game3loaded === true){
+      resetGame3();
+    }
+
+    if(game4Loaded === true){
+      game4Reset();
+      game4Loaded = false;
+    }
+
+    textSize(24);
+    
+    fill('black');
+
+     
+    // Hide the home page button, show the activity buttons
+  }
+
+  function setup() {
+    createCanvas(windowWidth, windowHeight);
+    background(mainMenuBG);
+    
+    
+
+    textSize(24);
+    
+    fill('black');
+
+    
 
 
     

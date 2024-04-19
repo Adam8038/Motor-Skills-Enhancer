@@ -6,20 +6,21 @@ let game4Winner = false;
 let game4Loaded = false;
 let game4TimerValue = 120;
 let game4TimerLoaded = false;
+let game4BG;
 
 function game4Preload(){
 
   game4Lvl1Button = createImg('libraries/lvl1Button.png');
-  game4Lvl1Button.position(250, 450);
+  game4Lvl1Button.position(windowWidth -200, 0);
   game4Lvl1Button.mousePressed(game4Lvl1Draw);
 
   game4Lvl2Button = createImg('libraries/lvl2Button.png');
-  game4Lvl2Button.position(550, 450);
+  game4Lvl2Button.position(windowWidth -200, windowHeight/3 +50);
   game4Lvl2Button.mousePressed(game4Lvl2Draw);
   
 
   game4Lvl3Button = createImg('libraries/lvl3Button.png');
-  game4Lvl3Button.position(850, 450);
+  game4Lvl3Button.position(windowWidth -200, windowHeight-200);
   game4Lvl3Button.mousePressed(game4Lvl3Draw);
 
   g4LevelSelect = createImg('libraries/levelSelect.png');
@@ -28,7 +29,8 @@ function game4Preload(){
   g4LevelSelect.hide();
 
   setInterval(game4TimeIt, 1000);
-
+  
+  game4BG = loadImage("libraries/stackingBG.png");
   hideGame4LvlButtons();
 }
 
@@ -40,15 +42,13 @@ function game4Setup() {
   game4Loaded = true;
   
   showGame4LvlButtons();
-  background('#6600ff');
+  background(game4BG);
 
   textSize(55);
-  fill('black');
-  text("Welcome to the stacking game! Pick a level", 200, 100);
   game4TimerLoaded = true;
 
   strokeWeight(2);
-  
+  game4TimerLoaded = true;
   onlyMMButton();
 }
 
@@ -66,75 +66,40 @@ function game4Draw(){
 
 function game4Lvl1Draw() {
 
+  if (!draggablesCreated){
+    createDraggables(3);
+    draggablesCreated = true;
+    }
+  
   if(game4CurrentLevel != 1){
     game4CurrentLevel = 1;
   }
-  background('#6600ff');
-  game4Feedback(); 
-
-  if(game4TimerValue === 0){
-    game2LoserMenu();
-  }
-
-  if(game4TimerLoaded === true && game4TimerValue < 120){
-    game4TimerValue = 120;
-    game4TimerLoaded = false;
-  }
-
-  if (!draggablesCreated){
-  createDraggables(3);
-  draggablesCreated = true;
-  }
-
-  for (let draggable of draggables) {
-    
-    draggable.over();
-    draggable.update();
-    draggable.show();
-    
-  }
-  
-  if (game4TimerValue >= 0) {
-    fill('black');
-    text("Time left:" + game4TimerValue, 40, 230);
-  }
-
-  if(game4Winner === true){
-    game4WinScreen();
-  }
-
-  hideGame4LvlButtons();
+  g4Gameplay();
 }
 
 function game4Lvl2Draw() {
   if(game4CurrentLevel != 2){
     game4CurrentLevel = 2;
   }
-  background('#6600ff');
-  game4Feedback(); 
 
   if (!draggablesCreated){
-  createDraggables(6);
-  draggablesCreated = true;
-  }
-
-  for (let draggable of draggables) {
-    
-    draggable.over();
-    draggable.update();
-    draggable.show();
-    
-  }
-  
-
-  if(game4Winner === true){
-    game4WinScreen();
-  }
-
-  hideGame4LvlButtons();
+    createDraggables(6);
+    draggablesCreated = true;
+    }
+  g4Gameplay();
 }
 
 function game4Lvl3Draw() {
+  if(game4CurrentLevel != 3){
+    game4CurrentLevel = 3;
+  }
+
+  if (!draggablesCreated){
+    createDraggables(10);
+    draggablesCreated = true;
+    }
+
+  g4Gameplay();
   
 }
 
@@ -203,10 +168,11 @@ function game4LvlSelect(){
 function game4Feedback(){
 
   textSize(42);
-  fill('black');
+  fill('white');
   
   text("You can do this!", 400, 100);
-  text("stack the block vertically like this:", 200,300);
+
+  text("stack the block vertically!", 200,300);
 }
 
 function game4TimeIt() {
@@ -253,10 +219,10 @@ function game4checkWinCondition() {
 }
 
 function game4WinScreen(){
-    background('#6600ff')
+    background(winningScreen);
     textSize(48);
-    fill('black');
-    text("Congrats you won", 500, 100);
+    getScore(game4TimerValue);
+    
     game4Reset();
     g4LevelSelect.show();
     clearDraggables();
@@ -264,7 +230,7 @@ function game4WinScreen(){
 
 
 function clearDraggables() {
-  draggables = [];  // Reset the array to empty
+  draggables = [];  
 }
 
 
@@ -328,4 +294,44 @@ class Draggable {
     // Quit dragging
     this.dragging = false;
   }
+}
+
+function g4Gameplay(){
+  background(gameBG);
+  game4Feedback(); 
+
+  if(game4TimerValue === 0){
+    game2LoserMenu();
+  }
+
+  if(game4TimerLoaded === true && game4TimerValue < 120){
+    game4TimerValue = 120;
+    game4TimerLoaded = false;
+  }
+
+  
+
+  for (let draggable of draggables) {
+    
+    draggable.over();
+    draggable.update();
+    draggable.show();
+    
+  }
+  
+  if (game4TimerValue >= 0) {
+    fill('white');
+    text("Time left:" + game4TimerValue, 40, 230);
+  }
+
+  if(game4Winner === true){
+    game4WinScreen();
+  }
+
+  if(game4TimerLoaded === true && game4TimerValue < 120){
+    game4TimerValue = 120;
+    game4TimerLoaded = false;
+  }
+
+  hideGame4LvlButtons();
 }

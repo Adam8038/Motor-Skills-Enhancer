@@ -1,5 +1,5 @@
 let game2CurrentLevel = 0;
-let game2Lvl1Button, game2Lvl2Button, game2Lvl3Button,typingGameBackground;
+let game2Lvl1Button, game2Lvl2Button, game2Lvl3Button,typingGameBackground, g2LevelSelect;
 let words = {
   1: ["cat", "dog", "bat"],
   2: ["apple", "banana", "cherry"],
@@ -9,7 +9,7 @@ let currentWord = "";
 let typedWord = "";
 let incorrectAttempts = 0;
 let wordInput;
-let game2Winner;
+let game2Winner =false;
 let game2Loaded = false;
 let game2TimerLoaded = false;
 let game2TimerValue = 120;
@@ -49,6 +49,11 @@ function game2Setup() {
   game2Loaded = true;
   game2TimerLoaded = true;
   showGame2LvlButtons();
+
+  if(game2Winner === true){
+    g2LevelSelect.hide();
+    game2Winner = false;
+  }
   
   strokeWeight(2);
   
@@ -112,6 +117,7 @@ function showCorrectMessage() {
   background(winningScreen); // Light green background on win
   textSize(32);
   fill('white');
+  g2LevelSelect.show();
   getScore(game2TimerValue);
   wordInput.hide();
   
@@ -199,9 +205,13 @@ function game2CheckWinner(){
 }
 
 function game2Reset(){
-  game2CurrentLevel = 0;
+  if(game2CurrentLevel !=0){
+    game2CurrentLevel = 0;
+    wordInput.hide();
+  }
+  
   hideGame2LvlButtons();
-  wordInput.hide();
+  
   game2TimerValue = 120;
   game2TimerLoaded = false;
   
