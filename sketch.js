@@ -1,14 +1,18 @@
   let currentActivity = 0;
   let menuButton, game1Button, game2Button, game3Button, game4Button, mainMenuBG, gameBG;  
+  let winScreenBG;
 
   function preload(){
     
     mainMenuBG = loadImage("libraries/mainMenuBG.png");
     gameBG = loadImage("libraries/gameBG.png");
+    winningScreen = loadImage("libraries/winScreenBG.png");
     game1Preload();
     game2Preload();
     game3Preload();
     game4Preload();
+
+    
     
   }
 
@@ -60,22 +64,22 @@
     menuButton.hide();
     
     game1Button = createImg('libraries/drawingButton.png');
-    game1Button.position(0, 460);
+    game1Button.position(0, windowHeight - 250 );
     game1Button.mousePressed(game1Setup);
     game1Button.show();
     
     game2Button = createImg('libraries/typingButton.png');
-    game2Button.position(300, 460);
+    game2Button.position((windowWidth/4), windowHeight - 250);
     game2Button.mousePressed(game2Setup);
     game2Button.show();
     
     game3Button = createImg('libraries/buttonButton.png');
-    game3Button.position(925, 460);
+    game3Button.position((windowWidth/4)*3 - 180, windowHeight - 250);
     game3Button.mousePressed(game3Setup);
     game3Button.show();
 
     game4Button = createImg('libraries/stackingButton.png');
-    game4Button.position(1175, 460);
+    game4Button.position(windowWidth - 250, windowHeight - 250);
     game4Button.mousePressed(game4Setup);
     game4Button.show();
 
@@ -88,7 +92,7 @@
     
     textSize(32);
     fill("white");
-    text('Click an activity', 600, 600);
+    text('Click an activity', windowWidth/2- 125, windowHeight - 50);
     
 
     
@@ -129,7 +133,7 @@
     
     textSize(32);
     fill('white');
-    text('Click an activity', 600, 600);
+    text('Click an activity', windowWidth/2- 125, windowHeight - 50);
     
 
   }
@@ -138,6 +142,7 @@
   function mousePressed(){
     switch(currentActivity){
       case 1: game1MousePressed(); break;
+      case 3: game3MousePressed(); break;
       case 4: game4MousePressed(); break;
     }
       
@@ -186,10 +191,10 @@
     function recenterButtons(){
   
       menuButton.position(0, 0);
-      game1Button.position(0, 450);
-      game2Button.position(400, 450);
-      game3Button.position(875, 450);
-      game4Button.position(1200, 450);
+      game1Button.position(0, windowHeight - 250 );
+      game2Button.position((windowWidth/4), windowHeight - 250);
+      game3Button.position((windowWidth/4)*3 - 180, windowHeight - 250);
+      game4Button.position(windowWidth - 250, windowHeight - 250);
   
     }
 

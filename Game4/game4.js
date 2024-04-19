@@ -46,6 +46,8 @@ function game4Setup() {
   fill('black');
   text("Welcome to the stacking game! Pick a level", 200, 100);
   game4TimerLoaded = true;
+
+  strokeWeight(2);
   
   onlyMMButton();
 }

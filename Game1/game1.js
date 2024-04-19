@@ -66,6 +66,8 @@ function game1Setup() {
   setupTargetShape();
   currentActivity = 1;
   onlyMMButton(); // Ensure this function is defined in your project
+
+  strokeWeight(2);
 }
 
 function game1Draw() {
@@ -98,7 +100,7 @@ function game1Lvl1Draw(){
 
   // Draw shadow
   noFill();
-  strokeWeight(5); // Increase pencil thickness
+  strokeWeight(10); // Increase pencil thickness
   stroke(150, 150, 150, 100); // Semi-transparent gray
   beginShape();
   for (let i = 0; i < shadowPoints.length; i++) {
@@ -108,7 +110,7 @@ function game1Lvl1Draw(){
 
   // Draw user's shape
   noFill();
-  strokeWeight(5); // Increase pencil thickness
+  strokeWeight(10); // Increase pencil thickness
   stroke(0); // Black color for user's shape
   beginShape();
   for (let i = 0; i < shapePoints.length; i++) {
@@ -119,6 +121,7 @@ function game1Lvl1Draw(){
   // Display score
   let score = calculateScore();
   fill(0);
+  strokeWeight(2);
   textSize(20);
   text("Score: " + score.toFixed(2) + "%", 200, 40);
 }

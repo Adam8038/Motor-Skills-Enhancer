@@ -22,16 +22,16 @@ function game2Preload() {
   
 
   game2Lvl1Button = createImg('libraries/lvl1Button.png');
-  game2Lvl1Button.position(1100, 50);
+  game2Lvl1Button.position(windowWidth -200, 0);
   game2Lvl1Button.mousePressed(() => playLevel(1));
 
   game2Lvl2Button = createImg('libraries/lvl2Button.png');
-  game2Lvl2Button.position(1100, 250);
+  game2Lvl2Button.position(windowWidth -200, windowHeight/3 +50);
   game2Lvl2Button.mousePressed(() => playLevel(2));
   
 
   game2Lvl3Button = createImg('libraries/lvl3Button.png');
-  game2Lvl3Button.position(1100, 450);
+  game2Lvl3Button.position(windowWidth -200, windowHeight-200);
   game2Lvl3Button.mousePressed(() => playLevel(3));
 
   g2LevelSelect = createImg('libraries/levelSelect.png');
@@ -50,7 +50,7 @@ function game2Setup() {
   game2TimerLoaded = true;
   showGame2LvlButtons();
   
-  
+  strokeWeight(2);
   
 
   background(typingGameBackground);
@@ -109,11 +109,9 @@ function checkTyping() {
 }
 
 function showCorrectMessage() {
-  background('#ADD8E6'); // Light green background on win
+  background(winningScreen); // Light green background on win
   textSize(32);
   fill('white');
-  text("Congratulations! You've won!", width / 2, height / 2 - 20);
-  text("Click to play again", width / 2, height / 2 + 20);
   getScore(game2TimerValue);
   wordInput.hide();
   
@@ -149,7 +147,7 @@ function game2Lvl3Draw() {
 }
 
 function displayWords() {
-  background(typingGameBackground);
+  background(gameBG);
   textSize(32);
   text("You can do this!",550,100);
 

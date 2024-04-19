@@ -7,28 +7,32 @@ let game3Winner = false;
 let game3TimerValue = 120;
 let game3TimerLoaded = false;
 
-let backgroundImage;
 
 
+let winningX, winningYTop,  winningYLow;
  
 
-let buttonImage, shirtImage, guyButtoningImage, confetti, hornImage, hornImage2, hornImage3, buttonImage2
+let buttonImage, shirtImage, buttonImage2, buttonBG;
 
 function game3Preload() {
 
   buttonImage = loadImage("Game3/redButton.png");
-  confettiImage = loadImage("Game3/confetti.png");
-  hornImage = loadImage("Game3/horn.png");
-  hornImage2 = loadImage("Game3/horn.png");
-  hornImage3 = loadImage("Game3/horn.png");
   buttonImage2 = loadImage("Game3/redButton.png");
-  guyButtoningImage = loadImage("Game3/guyButtoningShirt.jpg");
-  backgroundImage = loadImage("libraries/winScreenBG.png");
+  buttonBG = loadImage("libraries/game3BG.png")
+  
+  
+
+
+  winningX = windowWidth-290 ;
+  winningYTop = windowHeight /1.6;
+
+  winningYLow = winningYTop +200;
+  
 
   setInterval(game3TimeIt, 1000);
 
   game3Lvl1Button = createImg('libraries/lvl1Button.png');
-  game3Lvl1Button.position(250, 450);
+  game3Lvl1Button.position(windowWidth/3, windowHeight - 200);
   game3Lvl1Button.mousePressed(game3Lvl1Draw );
   game3Lvl1Button.hide();
 
@@ -48,16 +52,20 @@ function game3Preload() {
   g3LevelSelect.hide();
 
   shirtImage = createImg("Game3/shirtNoButtons.png");
-  shirtImage.position(750, 0);
+  shirtImage.position(windowWidth - 500, windowHeight /4);
   shirtImage.hide(); 
 
   
 }
 
+function game3MousePressed(){
+  console.log(mouseX,mouseY);
+}
+
 function game3Setup() {
 
   createCanvas(windowWidth, windowHeight);
-  background('#C8A2C8');
+  background(buttonBG);
   
 
   game3TimerLoaded = true;
@@ -67,19 +75,15 @@ function game3Setup() {
   game3Lvl2Button.show();
   game3Lvl3Button.show();
   
-
-  
   game3loaded = true;
   onlyMMButton();
 
-  
+  textSize(55);
+  fill('white');
 
   
-  textSize(55);
-  fill('black');
-  
-  text("Welcome to the buttoning game! Pick a level", 200, 100);
-  image(guyButtoningImage, 380,150,600,300);
+
+  strokeWeight(2);
 
  
   
@@ -113,8 +117,6 @@ function game3Lvl1Draw() {
   
   shirtImage.show();
   
-  
-  
   background(gameBG);
   hideGame3LvlButtons();
   
@@ -134,6 +136,9 @@ function game3Lvl1Draw() {
   }
   
   if(game3CurrentLevel === 1){
+
+
+  
 
     
     checkTopButton();
@@ -163,7 +168,7 @@ function game3Lvl2Draw() {
   shirtImage.show();
   
   
-  background('#C8A2C8');
+  background(gameBG);
   hideGame3LvlButtons();
   
   if(!game3Winner){
@@ -207,7 +212,7 @@ function game3Lvl3Draw() {
   shirtImage.show();
   
   
-  background('#C8A2C8');
+  background(gameBG);
   hideGame3LvlButtons();
   
   if(!game3Winner){
@@ -234,14 +239,13 @@ function game3Lvl3Draw() {
 
       if(mouseX >= 700 && mouseY <= 600 && mouseY >= 250 && !game3Winner){
         textSize(42);
-        fill('black');
-        text("Keep going you're almost there", 250, 200);
-        text("Hold enter to open the buttonhole",200,275);
+        fill('white');
+        text("Hold enter to open the hole",200,275);
       }
       //Some advice and encouragement for the user
       if(!game3Winner && game3CurrentLevel != 0){
         textSize(42);
-        fill('black');
+        fill('white');
         text("You got this!",450, 50);
     
         textSize(48);
@@ -282,14 +286,13 @@ function game3Lvl3DrawPart2() {
 
       if(mouseX >= 700 && mouseY <= 600 && mouseY >= 250 && !game3Winner){
         textSize(42);
-        fill('black');
-        text("Keep going you're almost there", 250, 200);
-        text("Hold enter to open the buttonhole",200,275);
+        fill('white');
+        text("Hold enter to open the hole",200,275);
       }
       //Some advice and encouragement for the user
       if(!game3Winner && game3CurrentLevel != 0){
         textSize(42);
-        fill('black');
+        fill('white');
         
     
         textSize(48);
@@ -329,7 +332,7 @@ function resetGame3(){
 
 //this checks to see if the user is in the top buttonhole if they are then calls the winner function
 function checkTopButton(){
-  if(mouseX>= 1115 && mouseX < 1135 && mouseY >= 363 && mouseY <= 383  &&game3CurrentLevel <3){
+  if(mouseX>= winningX-15 && mouseX < winningX+15 && mouseY >= winningYTop - 15 && mouseY <= winningYTop+15  &&game3CurrentLevel <3){
     game3Winner = true;
     game3CurrentLevel = 0;
     console.log("checked top");
@@ -338,7 +341,7 @@ function checkTopButton(){
 
   }
 
-  if(mouseX>= 1115 && mouseX < 1135 && mouseY >= 363 && mouseY <= 383 && game3CurrentLevel == 3){
+  if(mouseX>= winningX-15 && mouseX < winningX+15 && mouseY >= winningYTop - 15 && mouseY <= winningYTop+15 && game3CurrentLevel == 3){
     game3CurrentLevel = 4;
     
 
@@ -347,7 +350,7 @@ function checkTopButton(){
 //checks to see if the button is in the bottom buttonhole
 function checkBottomButton(){
 
-  if(mouseX>= 1115 && mouseX < 1135 && mouseY >= 540 && mouseY <= 570){
+  if(mouseX>= winningX-15 && mouseX < winningX+15 && mouseY >= winningYLow - 15 && mouseY <= winningYLow+15){
     game3Winner = true;
     game3CurrentLevel = 0;
     console.log("checked bottom");
@@ -358,13 +361,14 @@ function checkBottomButton(){
 //called when the user wins
 function winnerWinner3(){
     
-    background(backgroundImage);  
+    background(winningScreen);  
     getScore(game3TimerValue);
+    
     
 
     g3LevelSelect.show();
     textSize(48);
-    fill('black');
+    fill('white');
     
     
 }
@@ -382,14 +386,13 @@ function game3TimeIt() {
 function game3Feedback(){
   if(mouseX >= 700 && mouseY <= 600 && mouseY >= 250 && !game3Winner){
     textSize(42);
-    fill('black');
-    text("Keep going you're almost there", 250, 200);
-    text("Hold enter to open the buttonhole",200,275);
+    fill('white');
+    text("Hold enter to open the hole",200,275);
   }
   //Some advice and encouragement for the user
   if(!game3Winner && game3CurrentLevel != 0){
     textSize(42);
-    fill('black');
+    fill('white');
     text("You got this!",450, 50);
 
     textSize(48);
@@ -403,7 +406,7 @@ function game3LvlSelect(){
 }
 
 function game3LoserMenu(){
-  fill('black');
+  fill('white');
   text("Not exactly. Try again you got this!",450, 50);
   game3CurrentLevel = 0;
   g3LevelSelect.show();
