@@ -172,7 +172,7 @@ function game4Feedback(){
   
   text("You can do this!", 400, 100);
 
-  text("stack the block vertically!", 200,300);
+  text("Stack the block vertically!", 40 ,300);
 }
 
 function game4TimeIt() {
@@ -222,6 +222,8 @@ function game4WinScreen(){
     background(winningScreen);
     textSize(48);
     getScore(game4TimerValue);
+    fill('white');
+    text("Time left:" + game4TimerValue, 40, 230);
     
     game4Reset();
     g4LevelSelect.show();
@@ -231,6 +233,46 @@ function game4WinScreen(){
 
 function clearDraggables() {
   draggables = [];  
+}
+
+function g4Gameplay(){
+  background(gameBG);
+  game4Feedback(); 
+
+  if(game4TimerValue === 0){
+    game2LoserMenu();
+  }
+
+  if(game4TimerLoaded === true && game4TimerValue < 120){
+    game4TimerValue = 120;
+    game4TimerLoaded = false;
+  }
+
+  
+
+  for (let draggable of draggables) {
+    
+    draggable.over();
+    draggable.update();
+    draggable.show();
+    
+  }
+  
+  if (game4TimerValue >= 0) {
+    fill('white');
+    text("Time left:" + game4TimerValue, 40, 230);
+  }
+
+  if(game4Winner === true){
+    game4WinScreen();
+  }
+
+  if(game4TimerLoaded === true && game4TimerValue < 120){
+    game4TimerValue = 120;
+    game4TimerLoaded = false;
+  }
+
+  hideGame4LvlButtons();
 }
 
 
@@ -296,42 +338,3 @@ class Draggable {
   }
 }
 
-function g4Gameplay(){
-  background(gameBG);
-  game4Feedback(); 
-
-  if(game4TimerValue === 0){
-    game2LoserMenu();
-  }
-
-  if(game4TimerLoaded === true && game4TimerValue < 120){
-    game4TimerValue = 120;
-    game4TimerLoaded = false;
-  }
-
-  
-
-  for (let draggable of draggables) {
-    
-    draggable.over();
-    draggable.update();
-    draggable.show();
-    
-  }
-  
-  if (game4TimerValue >= 0) {
-    fill('white');
-    text("Time left:" + game4TimerValue, 40, 230);
-  }
-
-  if(game4Winner === true){
-    game4WinScreen();
-  }
-
-  if(game4TimerLoaded === true && game4TimerValue < 120){
-    game4TimerValue = 120;
-    game4TimerLoaded = false;
-  }
-
-  hideGame4LvlButtons();
-}

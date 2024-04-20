@@ -33,6 +33,8 @@
     game4Button.mousePressed(game4Setup);
     game4Button.show();
 
+    
+
 
     game1Preload();
     game2Preload();
@@ -53,6 +55,7 @@
     allMMButtons();
     textSize(72);
     if(game1Loaded === true){
+      resetGame1();
       game1HideButtons();
     }
     if(game2Loaded === true){
@@ -83,7 +86,7 @@
   function setup() {
     createCanvas(windowWidth, windowHeight);
     background(mainMenuBG);
-    
+    textFont('Courier New', 25);
     
 
     textSize(24);

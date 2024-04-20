@@ -59,9 +59,7 @@ function game2Setup() {
   
 
   background(typingGameBackground);
-  textSize(32);
-  fill('white');
-  text("Welcome to the Typing Game! Pick a level", 500, 100);
+  textSize(32)
 
   
 }
@@ -208,6 +206,7 @@ function game2Reset(){
   if(game2CurrentLevel !=0){
     game2CurrentLevel = 0;
     wordInput.hide();
+    g2LevelSelect.hide();
   }
   
   hideGame2LvlButtons();
