@@ -1,194 +1,219 @@
-  /****
-   * FSE100: examples for how to link multiple exercises together
-   *****/
+let currentActivity = 0;
+let menuButton, game1Button, game2Button, game3Button, game4Button, mainMenuBG, gameBG;  
+let winningScreen;
 
-  let currentActivity = 0;
-  let menuButton, game1Button, game2Button, game3Button, game4Button;
+function preload(){
+  
+  mainMenuBG = loadImage("libraries/mainMenuBG.png");
+  gameBG = loadImage("libraries/gameBG.png");
+  winningScreen = loadImage("libraries/winScreenBG.png");
+
+  menuButton = createImg('libraries/menuButton.png');
+  menuButton.position(0, 0);
+  menuButton.mousePressed(switchToMM);
+  menuButton.hide();
+  
+  game1Button = createImg('libraries/drawingButton.png');
+  game1Button.position(0, windowHeight - 250 );
+  game1Button.mousePressed(game1Setup);
+  game1Button.show();
+  
+  game2Button = createImg('libraries/typingButton.png');
+  game2Button.position((windowWidth/4), windowHeight - 250);
+  game2Button.mousePressed(game2Setup);
+  game2Button.show();
+  
+  game3Button = createImg('libraries/buttonButton.png');
+  game3Button.position((windowWidth/4)*3 - 180, windowHeight - 250);
+  game3Button.mousePressed(game3Setup);
+  game3Button.show();
+
+  game4Button = createImg('libraries/stackingButton.png');
+  game4Button.position(windowWidth - 250, windowHeight - 250);
+  game4Button.mousePressed(game4Setup);
+  game4Button.show();
+
   
 
-  /***** 
-    * If you want to load images or sounds into your application,
-    * try using preload()
-    * https://p5js.org/reference/#/p5/preload
-    *****/
-  function preload(){
-    logo = loadImage("libraries/Logo.png");
-    game1Preload();
-    game2Preload();
-    game3Preload();
-    
+
+  game1Preload();
+  game2Preload();
+  game3Preload();
+  game4Preload();
+
+  
+  
+}
+
+function switchToMM(){
+  background(mainMenuBG);
+  
+  
+  currentActivity = 0;
+  recenterButtons();
+  
+  allMMButtons();
+  textSize(72);
+  if(game1Loaded === true){
+    resetGame1();
+    game1HideButtons();
   }
-
-  
-
-  function switchToMM(){
-    background('#90EE90');
-    image(logo, 451.5,60);
-    currentActivity = 0;
-    recenterButtons();
-    
-    allMMButtons();
-
-    
-    if(game3loaded = true){
-      function resetGame3(){
-
-      }
-      resetGame3();
+  if(game2Loaded === true){
+    if(game2Winner === true){
+      g2LevelSelect.hide();
+      game2Winner = false;
     }
-    
-
-    textSize(24);
-    
-    fill('black');
-
-
-    
-
-
-    textSize(72);
-    text('Welcome to Precision Play!',290,75);
-    
-    textSize(32);
-    text('Click an activity', 600, 600);
-    
-    
-    // Hide the home page button, show the activity buttons
-  }
-
-  function setup() {
-    createCanvas(windowWidth, windowHeight);
-    background('#90EE90');
-    image(logo, 451.5,60);
-
-    
-
-    textSize(24);
-    
-    fill('black');
-
-    menuButton = createImg('libraries/menuButton.png', 'Menu Button');
-    menuButton.position(-100, -100);
-    menuButton.mousePressed(switchToMM);
-    menuButton.hide();
-    
-    game1Button = createImg('libraries/drawingButton.png', 'Drawing Button');
-    game1Button.position(0, 360);
-    game1Button.mousePressed(game1Setup);
-    game1Button.show();
-    
-    game2Button = createImg('libraries/typingButton.png', 'Typing Button');
-    game2Button.position(300, 360);
-    game2Button.mousePressed(game2Setup);
-    game2Button.show();
-    
-    game3Button = createImg('libraries/buttonButton.png', 'Button Button');
-    game3Button.position(730, 360);
-    game3Button.mousePressed(game3Setup);
-    game3Button.show();
-
-    game4Button = createImg('libraries/stackingButton.png', 'Stacking Button');
-    game4Button.position(1050, 360);
-    game4Button.mousePressed(game4SetupWrapper);
-    game4Button.show();
-
-
-    
-
-
-    textSize(72);
-    text('Welcome to Precision Play!',290,75);
-    
-    textSize(32);
-    text('Click an activity', 600, 600);
-    
-
-    
-  }
-
-
-  function draw() {  
-    switch(currentActivity){
-      case 0:
-        mainMenu();
-        break;
-      case 1:
-        game1Draw();
-        break;
-      case 2:
-        game2Draw();
-        break;
-      case 3:
-        game3Draw();
-        break;
-      case 4:
-        game4Draw();
-        break;
-    }
-  }
-
-
-  function mainMenu(){
-      
-
-    textSize(24);
-    
-    fill('black');
-
-
-    textSize(72);
-    text('Welcome to Precision Play!',290,75);
-    
-    textSize(32);
-    text('Click an activity', 600, 600);
-    
-
-  }
-
-  
-  function game3MousePressed(){
-    
-      
-      game3MousePressed();
-      game4MousePressed();
-  }
-
-  function mouseReleased(){
-
-      game4MouseReleased();
-  }
-
-  
-  function gameButtonsOnly() {
-    menuButton.hide();
-    game1Button.show();
-    game2Button.show();
-    game3Button.show();
-    game4Button.show();
+    game2Reset();
   }
   
-  function onlyMMButton() {
-    menuButton.show();
-    game1Button.hide();
-    game2Button.hide();
-    game3Button.hide();
-    game4Button.hide();
+  if(game3loaded === true){
+    resetGame3();
   }
 
-  function allMMButtons(){
-    menuButton.show();
-    game1Button.show();
-    game2Button.show();
-    game3Button.show();
-    game4Button.show();
+  if(game4Loaded === true){
+    game4Reset();
+    game4Loaded = false;
   }
 
-    function recenterButtons(){
+  textSize(24);
   
-      menuButton.position(-100, -100);
-      game2Button.position(300, 360);
-      game3Button.position(730, 360);
-      game4Button.position(1050, 360);
+  fill('black');
+
+   
+  // Hide the home page button, show the activity buttons
+}
+
+function setup() {
+  createCanvas(windowWidth, windowHeight);
+  background(mainMenuBG);
+  textFont('Courier New', 25);
   
-    }
+
+  textSize(24);
   
+  fill('black');
+
+  
+
+
+  
+
+
+  textSize(72);
+  
+  
+  textSize(32);
+  fill("white");
+  text('Click an activity', windowWidth/2- 125, windowHeight - 50);
+  
+
+  
+}
+
+
+function draw() {  
+  switch(currentActivity){
+    case 0:
+      mainMenu();
+      break;
+    case 1:
+      game1Draw();
+      break;
+    case 2:
+      game2Draw();
+      break;
+    case 3:
+      game3Draw();
+      break;
+    case 4:
+      game4Draw();
+      break;
+  }
+}
+
+
+function mainMenu(){
+    
+
+  textSize(24);
+  
+  fill('black');
+
+
+  textSize(72);
+  
+  
+  textSize(32);
+  fill('white');
+  text('Click an activity', windowWidth/2- 125, windowHeight - 50);
+  
+
+}
+
+
+function mousePressed(){
+  switch(currentActivity){
+    case 1: game1MousePressed(); break;
+    case 3: game3MousePressed(); break;
+    case 4: game4MousePressed(); break;
+  }
+    
+}
+
+function mouseReleased(){
+
+  switch(currentActivity){
+    case 1: game1MouseReleased(); break;
+    case 4: game4MouseReleased(); break;
+  }
+}
+
+function mouseDragged(){
+  
+  switch(currentActivity){
+    case 1: game1MouseDragged(); break;
+  }
+}
+
+
+function gameButtonsOnly() {
+  menuButton.hide();
+  game1Button.show();
+  game2Button.show();
+  game3Button.show();
+  game4Button.show();
+}
+
+function onlyMMButton() {
+  menuButton.show();
+  game1Button.hide();
+  game2Button.hide();
+  game3Button.hide();
+  game4Button.hide();
+}
+
+function allMMButtons(){
+  menuButton.show();
+  game1Button.show();
+  game2Button.show();
+  game3Button.show();
+  game4Button.show();
+}
+
+  function recenterButtons(){
+
+    menuButton.position(0, 0);
+    game1Button.position(0, windowHeight - 250 );
+    game2Button.position((windowWidth/4), windowHeight - 250);
+    game3Button.position((windowWidth/4)*3 - 180, windowHeight - 250);
+    game4Button.position(windowWidth - 250, windowHeight - 250);
+
+  }
+
+  function getScore(levelTimerValue){
+    let score = 0;
+
+    score = levelTimerValue * 152;
+
+    text("Score:" + score, 40,400);
+  }
