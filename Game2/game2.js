@@ -132,8 +132,8 @@ function showTryAgainMessage() {
   background('#FF6347'); // Consistent error background
   textSize(24);
   fill('white');
-  text("Out of attempts! Click to restart", width / 2, height / 2);
-  game2LvlSelect.show();
+  text("Delete and try again. You got this!", width / 2, height / 2);
+  g2LevelSelect.show();
 }
 
 function game2Lvl1Draw() {
@@ -145,7 +145,7 @@ function game2Lvl2Draw() {
   displayWords();
   
 }
-
+f
 function game2Lvl3Draw() {
   displayWords();
   
