@@ -133,6 +133,7 @@ function showTryAgainMessage() {
   textSize(24);
   fill('white');
   text("Out of attempts! Click to restart", width / 2, height / 2);
+  game2LvlSelect.show();
 }
 
 function game2Lvl1Draw() {

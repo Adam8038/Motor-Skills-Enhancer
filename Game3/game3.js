@@ -24,7 +24,7 @@ function game3Preload() {
 
 
   winningX = windowWidth-290 ;
-  winningYTop = windowHeight /1.6;
+  winningYTop = windowHeight /1.5;
 
   winningYLow = winningYTop +200;
   
@@ -52,7 +52,7 @@ function game3Preload() {
   g3LevelSelect.hide();
 
   shirtImage = createImg("Game3/shirtNoButtons.png");
-  shirtImage.position(windowWidth - 500, (windowHeight /6)-50);
+  shirtImage.position(windowWidth - 500, windowHeight / 6);
   shirtImage.hide(); 
 
   
