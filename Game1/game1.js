@@ -203,6 +203,10 @@ function game1Lvl2Draw(){
     game1TimerLoaded = false;
   }
 
+  if(game1TimerValue === 0){
+    game1CurrentLevel = 4;
+  }
+
   game1DisplayTimer();
 
   // Display score
@@ -261,6 +265,10 @@ function game1Lvl3Draw(){
   }
 
   game1DisplayTimer();
+
+  if(game1TimerValue === 0){
+    game1CurrentLevel = 4;
+  }
 
 
   drawShapeSessions();
