@@ -52,7 +52,7 @@ function game3Preload() {
   g3LevelSelect.hide();
 
   shirtImage = createImg("Game3/shirtNoButtons.png");
-  shirtImage.position(windowWidth - 500, (windowHeight /5)-50);
+  shirtImage.position(windowWidth - 500, (windowHeight /6)-50);
   shirtImage.hide(); 
 
   

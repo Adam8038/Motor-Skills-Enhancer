@@ -58,6 +58,9 @@
       resetGame1();
       game1HideButtons();
     }
+    if(game2Winner === true){
+      g2LevelSelect.hide();
+    }
     if(game2Loaded === true){
       if(game2Winner === true){
         g2LevelSelect.hide();
