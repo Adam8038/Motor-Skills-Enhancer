@@ -211,7 +211,7 @@ function game2Reset(){
   
   hideGame2LvlButtons();
   
-  game2TimerValue = 120;
+  
   game2TimerLoaded = false;
   
 }
